@@ -28,6 +28,21 @@ st.markdown(
         text-align: center;
         margin-bottom: 25px;
     }
+    .formula-box {
+        background-color: #F8FAFC;
+        padding: 15px;
+        border-radius: 10px;
+        border-left: 5px solid #2563EB;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    .level-card {
+        background-color: #FFFFFF;
+        padding: 12px 18px;
+        border-radius: 8px;
+        border: 1px solid #E2E8F0;
+        margin-bottom: 12px;
+    }
     </style>
 """,
     unsafe_allow_html=True,
@@ -116,8 +131,7 @@ with col_left:
       st.caption("Năng lực tự chủ tư duy tốt")
 
   st.markdown("### 📢 Cảnh Báo Thị Giác Trực Quan")
-  
-  # Cảnh báo thị giác chuẩn hóa theo đúng ví dụ trong tài liệu
+
   if c_blind >= 0.5:
     st.error(
         f"🚨 **CẢNH BÁO SỬ DỤNG AI MÙ QUÁNG:** Bạn đã dành"
@@ -154,7 +168,15 @@ with col_left:
   }
   df = pd.DataFrame(data)
   st.dataframe(df, use_container_width=True, hide_index=True)
-  st.info("**Công thức COI:** `COI = max(0, 30*F_off - 20*T_off + 70*C_blind)`")
+
+  # TRÌNH BÀY CÔNG THỨC COI ĐẸP ĐẼ BẰNG LATEX
+  st.markdown("<div class='formula-box'>", unsafe_allow_html=True)
+  st.markdown(" **Công thức toán học tính chỉ số COI:**")
+  st.latex(
+      r"\text{COI} = \max\left(0,\; 30 \cdot F_{\text{off}} - 20 \cdot"
+      r" T_{\text{off}} + 70 \cdot C_{\text{blind}}\right)"
+  )
+  st.markdown("</div>", unsafe_allow_html=True)
 
 # ==========================================
 # 5. VẼ BIỂU ĐỒ RADAR 4 CHIỀU NĂNG LỰC
@@ -193,31 +215,50 @@ with col_right:
   st.pyplot(fig)
 
 # ==========================================
-# 6. LỘ TRÌNH TỰ ĐIỀU CHỈNH (GAMIFICATION)
+# 6. LỘ TRÌNH TỰ ĐIỀU CHỈNH XẾP DỌC (GAMIFICATION)
 # ==========================================
 st.markdown("---")
-st.subheader("🎯 Lộ Trình Tự Điều Chỉnh (Gamification)")
+st.subheader("🎯 Lộ Trình Gamification: 4 Bước Chuyển Hóa Tư Duy")
 st.write(
-    "Hãy tích chọn các thử thách cá nhân hóa dưới đây để rèn luyện bản lĩnh tự"
-    " học và nâng cao năng lực tự chủ:"
+    "Thực hiện lần lượt các bước dưới đây từ trên xuống dưới để rèn luyện bản"
+    " lĩnh tự học:"
 )
 
-c1, c2 = st.columns(2)
-with c1:
-  st.checkbox(
-      "Thử thách 1: Nâng chỉ số thời gian suy nghĩ T_off lên mức tối thiểu 0.50"
-      " trước khi tìm trợ giúp từ AI."
-  )
-  st.checkbox(
-      "Thử thách 2: Thử thách tự phát hiện ít nhất 3 bẫy ảo giác (Hallucination)"
-      " hoặc lỗi sai của AI trong bài học."
-  )
-with c2:
-  st.checkbox(
-      "Thử thách 3: Sử dụng Socratic Prompting (yêu cầu AI đặt câu hỏi gợi mở"
-      " thay vì đưa lời giải trực tiếp)."
-  )
-  st.checkbox(
-      "Thử thách 4: Hoàn thành 1 bài tập phức tạp 100% bằng tư duy cá nhân mà"
-      " không sử dụng công cụ AI."
-  )
+# Bước 1
+st.markdown("##### 🟢 Level 1: Nỗ Lực Tư Duy Độc Lập ($T_{off}$)")
+st.checkbox(
+    "Cam kết tự nháp và suy nghĩ tối thiểu 10–15 phút trước khi mở AI trợ giúp.",
+    key="lvl1",
+)
+
+st.markdown("---")
+
+# Bước 2
+st.markdown(
+    "##### 🟡 Level 2: Hỏi Định Hướng & Phương Pháp - Không Hỏi Đáp Án"
+)
+st.checkbox(
+    "Tuyệt đối không xin đáp án trực tiếp. Chỉ yêu cầu AI hướng dẫn phương"
+    " hướng, công thức và khung cách làm khi bị bế tắc.",
+    key="lvl2",
+)
+
+st.markdown("---")
+
+# Bước 3
+st.markdown("##### 🟠 Level 3: Kiểm Chứng Phản Biện ($C_{blind}$)")
+st.checkbox(
+    "Đóng vai người kiểm duyệt: Chủ động truy tìm ít nhất 1 lỗi logic hoặc bẫy"
+    " ảo giác trong câu trả lời của AI.",
+    key="lvl3",
+)
+
+st.markdown("---")
+
+# Bước 4
+st.markdown("##### 🔴 Level 4: Làm Chủ Công Nghệ Hoàn Toàn")
+st.checkbox(
+    "Hoàn thành 1 bài tập phức tạp 100% bằng năng lực cá nhân, sau đó chỉ dùng"
+    " AI đóng vai trò người phản biện chấm điểm.",
+    key="lvl4",
+)
