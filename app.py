@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 import streamlit as st
 
 # ==========================================
@@ -145,14 +146,22 @@ with col_left:
         " thể thao túng tư duy phản biện của bạn."
     )
 
+  # Bảng giá trị hiển thị đẹp mắt chuẩn Báo cáo NCKH
   st.markdown("#### 📐 Bảng Giá Trị Biến Số Vào Mô Hình")
-  st.json({
-      "F_off (Tần suất hỏi AI)": f_off,
-      "T_off (Độ trễ cầu viện)": t_off,
-      "C_blind (Sao chép mù quáng)": c_blind,
-      "Trọng số áp dụng (a, b, c)": [a, b, c],
-      "Công thức": "COI = max(0, 30*F_off - 20*T_off + 70*C_blind)",
-  })
+
+  data = {
+      "Biến số": [
+          "F_off (Tần suất hỏi AI)",
+          "T_off (Độ trễ cầu viện)",
+          "C_blind (Sao chép mù quáng)",
+      ],
+      "Giá trị thực nghiệm": [f_off, t_off, c_blind],
+      "Trọng số (Weight)": [f"a = {a}", f"b = {b}", f"c = {c}"],
+  }
+  df = pd.DataFrame(data)
+
+  st.dataframe(df, use_container_width=True, hide_index=True)
+  st.info("**Công thức tính toán:** `COI = max(0, 30*F_off - 20*T_off + 70*C_blind)`")
 
 # ==========================================
 # 5. VẼ BIỂU ĐỒ RADAR 4 CHIỀU NĂNG LỰC
