@@ -20,42 +20,17 @@ st.markdown(
         font-weight: bold;
         color: #1E3A8A;
         text-align: center;
-        margin-bottom: 5px;
-    }
-    .sub-title {
-        font-size: 14px;
-        color: #4B5563;
-        text-align: center;
-        margin-bottom: 25px;
-    }
-    .formula-box {
-        background-color: #F8FAFC;
-        padding: 15px;
-        border-radius: 10px;
-        border-left: 5px solid #2563EB;
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
-    .level-card {
-        background-color: #FFFFFF;
-        padding: 12px 18px;
-        border-radius: 8px;
-        border: 1px solid #E2E8F0;
-        margin-bottom: 12px;
+        margin-bottom: 20px;
     }
     </style>
 """,
     unsafe_allow_html=True,
 )
 
+# Tiêu đề chính (Đã bỏ dòng Giải pháp 3)
 st.markdown(
     "<div class='main-title'>🔬 PHIẾU CHẨN ĐOÁN TƯ DUY CÁ NHÂN (PERSONAL"
     " AI-HEALTH CHECK)</div>",
-    unsafe_allow_html=True,
-)
-st.markdown(
-    "<div class='sub-title'>Giải pháp 3: Phát triển ứng dụng Báo cáo tự nhận"
-    " thức COI dành riêng cho Học sinh</div>",
     unsafe_allow_html=True,
 )
 st.markdown("---")
@@ -169,14 +144,12 @@ with col_left:
   df = pd.DataFrame(data)
   st.dataframe(df, use_container_width=True, hide_index=True)
 
-  # TRÌNH BÀY CÔNG THỨC COI ĐẸP ĐẼ BẰNG LATEX
-  st.markdown("<div class='formula-box'>", unsafe_allow_html=True)
-  st.markdown(" **Công thức toán học tính chỉ số COI:**")
+  # KHỐI CÔNG THỨC SẠCH SẼ - BỎ HTML DIV BỊ LỖI
+  st.markdown("**Công thức toán học tính chỉ số COI:**")
   st.latex(
       r"\text{COI} = \max\left(0,\; 30 \cdot F_{\text{off}} - 20 \cdot"
       r" T_{\text{off}} + 70 \cdot C_{\text{blind}}\right)"
   )
-  st.markdown("</div>", unsafe_allow_html=True)
 
 # ==========================================
 # 5. VẼ BIỂU ĐỒ RADAR 4 CHIỀU NĂNG LỰC
