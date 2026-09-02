@@ -28,15 +28,8 @@ st.markdown(
         text-align: center;
         margin-bottom: 25px;
     }
-    .metric-card {
-        background-color: #F3F4F6;
-        padding: 15px;
-        border-radius: 10px;
-        border-left: 5px solid #1E3A8A;
-    }
     </style>
 """,
-    unsafe_allow_style_gradient=True,
     unsafe_allow_html=True,
 )
 
