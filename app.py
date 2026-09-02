@@ -7,12 +7,11 @@ import streamlit as st
 # 1. THIẾT LẬP CẤU HÌNH TRANG WEB
 # ==========================================
 st.set_page_config(
-    page_title="Hệ Thống Chẩn Đoán Tư Duy COI - NCKH",
+    page_title="Báo Cáo Tự Nhận Thức COI - NCKH",
     page_icon="🔬",
     layout="wide",
 )
 
-# Custom CSS giao diện
 st.markdown(
     """
     <style>
@@ -35,13 +34,13 @@ st.markdown(
 )
 
 st.markdown(
-    "<div class='main-title'>🔬 HỆ THỐNG BÁO CÁO TRỰC QUAN & CHẨN ĐOÁN CHỈ SỐ"
-    " COI</div>",
+    "<div class='main-title'>🔬 PHIẾU CHẨN ĐOÁN TƯ DUY CÁ NHÂN (PERSONAL"
+    " AI-HEALTH CHECK)</div>",
     unsafe_allow_html=True,
 )
 st.markdown(
-    "<div class='sub-title'>Sản phẩm NCKH: Đo lường & Giảm thiểu chỉ số phụ thuộc"
-    " AI (COI) ở học sinh THPT</div>",
+    "<div class='sub-title'>Giải pháp 3: Phát triển ứng dụng Báo cáo tự nhận"
+    " thức COI dành riêng cho Học sinh</div>",
     unsafe_allow_html=True,
 )
 st.markdown("---")
@@ -49,12 +48,12 @@ st.markdown("---")
 # ==========================================
 # 2. KHỐI NHẬP DỮ LIỆU ĐẦU VÀO (SIDEBAR)
 # ==========================================
-st.sidebar.header("📋 NHẬP THÔNG SỐ HỌC SINH")
+st.sidebar.header("📋 THÔNG TIN HỌC SINH")
 student_name = st.sidebar.text_input("Họ và tên học sinh:", "Nguyễn Văn A")
 grade = st.sidebar.selectbox("Khối lớp:", ["Khối 10", "Khối 11", "Khối 12"])
 
 st.sidebar.markdown("---")
-st.sidebar.subheader("⚙️ Chỉ số hành vi thực nghiệm (Dải [0.0, 1.0])")
+st.sidebar.subheader("⚙️ Chỉ Số Hành Vi Thực Nghiệm")
 
 # Biến 1: C_blind
 c_blind = st.sidebar.slider(
@@ -63,10 +62,7 @@ c_blind = st.sidebar.slider(
     max_value=1.0,
     value=0.40,
     step=0.01,
-    help=(
-        "Tỷ lệ câu chấp nhận/copy hoàn toàn đáp án AI không qua kiểm chứng"
-        " phản biện (C_blind ∈ [0, 1])"
-    ),
+    help="Tỷ lệ bài làm chép nguyên văn từ AI không qua kiểm chứng (C_blind ∈ [0, 1])",
 )
 
 # Biến 2: F_off
@@ -76,20 +72,17 @@ f_off = st.sidebar.slider(
     max_value=1.0,
     value=0.60,
     step=0.01,
-    help="Tỷ lệ câu gửi yêu cầu/prompt cho AI xử lý (F_off ∈ [0, 1])",
+    help="Tỷ lệ câu hỏi gửi lệnh cho AI xử lý (F_off ∈ [0, 1])",
 )
 
 # Biến 3: T_off
 t_off = st.sidebar.slider(
-    "3. Độ trễ cầu viện (T_off):",
+    "3. Thời gian suy nghĩ độc lập (T_off):",
     min_value=0.0,
     max_value=1.0,
     value=0.17,
     step=0.01,
-    help=(
-        "Chỉ số nỗ lực tư duy/thời gian suy nghĩ độc lập trước khi cầu viện AI"
-        " (T_off ∈ [0, 1])"
-    ),
+    help="Chỉ số thời gian/nỗ lực suy nghĩ trước khi hỏi AI (T_off ∈ [0, 1])",
 )
 
 # ==========================================
@@ -101,7 +94,7 @@ coi_calc = (a * f_off) - (b * t_off) + (c * c_blind)
 coi = round(max(0.0, coi_calc), 2)
 
 # ==========================================
-# 4. HIỂN THỊ KẾT QUẢ CHẨN ĐOÁN
+# 4. HIỂN THỊ KẾT QUẢ CHẨN ĐOÁN & CẢNH BÁO THỊ GIÁC
 # ==========================================
 col_left, col_right = st.columns([1.1, 0.9])
 
@@ -113,55 +106,55 @@ with col_left:
     st.metric(label="Chỉ số Phụ thuộc AI (COI)", value=f"{coi} / 100")
   with m2:
     if coi > 60:
-      st.error("TRẠNG THÁI: MỨC CAO 🚨")
-      st.caption("Nguy cơ lạm dụng & tiêu biến tư duy")
+      st.error("MỨC ĐỘ: CAO 🚨")
+      st.caption("Cảnh báo lạm dụng nghiêm trọng")
     elif coi >= 30:
-      st.warning("TRẠNG THÁI: MỨC TRUNG BÌNH ⚠️")
-      st.caption("Có dấu hiệu bắt đầu phụ thuộc")
+      st.warning("MỨC ĐỘ: TRUNG BÌNH ⚠️")
+      st.caption("Có nguy cơ bắt đầu phụ thuộc")
     else:
-      st.success("TRẠNG THÁI: MỨC THẤP ✅")
-      st.caption("Giữ vững năng lực tự chủ học tập")
+      st.success("MỨC ĐỘ: THẤP ✅")
+      st.caption("Năng lực tự chủ tư duy tốt")
 
-  st.markdown("### 📢 Phân Tích Cơ Chế Tư Duy & Lời Khuyên")
-  if coi > 60:
+  st.markdown("### 📢 Cảnh Báo Thị Giác Trực Quan")
+  
+  # Cảnh báo thị giác chuẩn hóa theo đúng ví dụ trong tài liệu
+  if c_blind >= 0.5:
     st.error(
-        f"🚨 **CẢNH BÁO LẠM DỤNG:** Tỷ lệ sao chép mù quáng **C_blind ="
-        f" {c_blind:.2f}** ({c_blind*100:.0f}%). Theo thuyết *Kẻ bủn xỉn nhận"
-        " thức* (Cognitive Miser), bạn đang để AI thay thế hoàn toàn Mạng lưới"
-        " Tư duy 2. Hãy dừng thói quen copy-paste và kiểm định bẫy logic của"
-        " AI!"
-    )
-  elif coi >= 30:
-    st.warning(
-        f"⚠️ **CẢNH BÁO NGUY CƠ:** Độ trễ tư duy **T_off** hiện đạt"
-        f" **{t_off:.2f}**. Bạn đang có xu hướng tìm kiếm lối tắt quá nhanh"
-        " khi gặp bài tập khó. Hãy áp dụng quy tắc tự nháp ít nhất 10 phút"
-        " trước khi mở prompt hỏi AI."
+        f"🚨 **CẢNH BÁO SỬ DỤNG AI MÙ QUÁNG:** Bạn đã dành"
+        f" **{c_blind*100:.0f}%** bài làm để chép từ AI mà không qua kiểm"
+        " chứng phản biện! Hãy dừng ngay việc copy-paste để tránh tiêu biến"
+        " tư duy độc lập."
     )
   else:
-    st.balloons()
-    st.success(
-        "🎉 **TƯ DUY ĐỘC LẬP TỐT:** Bạn đang làm chủ công nghệ xuất sắc! AI chỉ"
-        " đóng vai trò là 'Công cụ mở rộng nhận thức' (Extended Mind) chứ không"
-        " thể thao túng tư duy phản biện của bạn."
+    st.info(f"💡 Tỷ lệ chấp nhận đáp án AI chưa qua kiểm định: **{c_blind*100:.0f}%**.")
+
+  if t_off <= 0.3:
+    st.warning(
+        f"⚠️ **CẢNH BÁO THỜI GIAN SUY NGHĨ $T_{{off}}$:** Chỉ số thời gian suy"
+        f" nghĩ $T_{{off}}$ của bạn hiện ở mức rất thấp (**{t_off:.2f}**). Bạn"
+        " đang quá vội vã tìm kiếm 'lối tắt' thay vì tự nháp bài."
     )
+  else:
+    st.success(f"✅ Chỉ số nỗ lực tư duy $T_{{off}}$ đạt mức tích cực: **{t_off:.2f}**.")
 
-  # Bảng giá trị hiển thị đẹp mắt chuẩn Báo cáo NCKH
-  st.markdown("#### 📐 Bảng Giá Trị Biến Số Vào Mô Hình")
-
+  # Bảng giá trị thông số thực nghiệm
+  st.markdown("#### 📐 Bảng Thông Số Chẩn Đoán Dữ Liệu")
   data = {
-      "Biến số": [
-          "F_off (Tần suất hỏi AI)",
-          "T_off (Độ trễ cầu viện)",
-          "C_blind (Sao chép mù quáng)",
+      "Chỉ số hành vi": [
+          "1. Tỷ lệ dán mù (C_blind)",
+          "2. Tần suất hỏi AI (F_off)",
+          "3. Thời gian suy nghĩ (T_off)",
       ],
-      "Giá trị thực nghiệm": [f_off, t_off, c_blind],
-      "Trọng số (Weight)": [f"a = {a}", f"b = {b}", f"c = {c}"],
+      "Giá trị đo lường": [
+          f"{c_blind*100:.0f}% ({c_blind})",
+          f"{f_off*100:.0f}% ({f_off})",
+          f"{t_off:.2f}",
+      ],
+      "Trọng số mô hình": [f"c = {c}", f"a = {a}", f"b = {b}"],
   }
   df = pd.DataFrame(data)
-
   st.dataframe(df, use_container_width=True, hide_index=True)
-  st.info("**Công thức tính toán:** `COI = max(0, 30*F_off - 20*T_off + 70*C_blind)`")
+  st.info("**Công thức COI:** `COI = max(0, 30*F_off - 20*T_off + 70*C_blind)`")
 
 # ==========================================
 # 5. VẼ BIỂU ĐỒ RADAR 4 CHIỀU NĂNG LỰC
@@ -176,7 +169,6 @@ with col_right:
       "Metacognition\n(Siêu nhận thức)",
   ])
 
-  # Quy đổi về dải 0 - 100 cho đồ thị
   stats = [
       t_off * 100,
       (1 - c_blind) * 100,
@@ -201,31 +193,31 @@ with col_right:
   st.pyplot(fig)
 
 # ==========================================
-# 6. THỬ THÁCH TỰ ĐIỀU CHỈNH HÀNH VI (GAMIFICATION)
+# 6. LỘ TRÌNH TỰ ĐIỀU CHỈNH (GAMIFICATION)
 # ==========================================
 st.markdown("---")
-st.subheader("🎯 Thử Thách 7 Ngày Tự Điều Chỉnh Hành Vi Học Tập")
+st.subheader("🎯 Lộ Trình Tự Điều Chỉnh (Gamification)")
 st.write(
-    "Tích chọn các mục tiêu bạn cam kết thực hiện để nâng cao chỉ số năng lực tự"
-    " chủ:"
+    "Hãy tích chọn các thử thách cá nhân hóa dưới đây để rèn luyện bản lĩnh tự"
+    " học và nâng cao năng lực tự chủ:"
 )
 
 c1, c2 = st.columns(2)
 with c1:
   st.checkbox(
-      "Thử thách 1: Nâng chỉ số nỗ lực T_off lên tối thiểu 0.50 trước khi cầu"
-      " viện AI."
+      "Thử thách 1: Nâng chỉ số thời gian suy nghĩ T_off lên mức tối thiểu 0.50"
+      " trước khi tìm trợ giúp từ AI."
   )
   st.checkbox(
-      "Thử thách 2: Sử dụng Socratic Prompting để AI đóng vai gợi mở thay vì cho"
-      " đáp án."
+      "Thử thách 2: Thử thách tự phát hiện ít nhất 3 bẫy ảo giác (Hallucination)"
+      " hoặc lỗi sai của AI trong bài học."
   )
 with c2:
   st.checkbox(
-      "Thử thách 3: Tìm ra ít nhất 1 bẫy ảo giác (Hallucination) trong câu trả"
-      " lời của AI."
+      "Thử thách 3: Sử dụng Socratic Prompting (yêu cầu AI đặt câu hỏi gợi mở"
+      " thay vì đưa lời giải trực tiếp)."
   )
   st.checkbox(
-      "Thử thách 4: Giải hoàn chỉnh 1 bài tập phức tạp mà không sử dụng bất kỳ"
-      " công cụ hỗ trợ nào."
+      "Thử thách 4: Hoàn thành 1 bài tập phức tạp 100% bằng tư duy cá nhân mà"
+      " không sử dụng công cụ AI."
   )
