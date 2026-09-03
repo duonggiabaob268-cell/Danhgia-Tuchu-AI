@@ -99,12 +99,12 @@ st.markdown(
         display: block;
     }
 
-    /* CSS nâng cấp Hướng dẫn đọc Biểu đồ Radar Sinh Động */
+    /* Hướng dẫn đọc Biểu đồ Radar đặt dưới cột trái */
     .radar-guide-container {
         background: #FFFFFF;
         border-radius: 16px;
         padding: 20px;
-        margin-top: 15px;
+        margin-top: 20px;
         border: 1px solid #E2E8F0;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
     }
@@ -130,13 +130,13 @@ st.markdown(
     .radar-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 10px;
+        gap: 12px;
     }
     .radar-card {
         background: #F8FAFC;
         border: 1px solid #F1F5F9;
         border-radius: 10px;
-        padding: 10px 12px;
+        padding: 12px 14px;
         transition: all 0.2s ease;
     }
     .radar-card:hover {
@@ -145,7 +145,7 @@ st.markdown(
     }
     .radar-card-title {
         font-weight: 700;
-        font-size: 13px;
+        font-size: 13.5px;
         color: #0F172A;
         margin-bottom: 4px;
         display: flex;
@@ -153,7 +153,7 @@ st.markdown(
         gap: 6px;
     }
     .radar-card-desc {
-        font-size: 12px;
+        font-size: 12.5px;
         color: #475569;
         line-height: 1.4;
     }
@@ -285,8 +285,9 @@ elif st.session_state.page == 2:
     st.session_state.page = 1
     st.rerun()
 
-  col_left, col_right = st.columns([1.1, 0.9], gap="large")
+  col_left, col_right = st.columns([1, 1], gap="large")
 
+  # ---------------- CỘT BÊN TRÁI ----------------
   with col_left:
     st.markdown(f"### 👤 Hồ sơ: **{student_name}** ({grade})")
 
@@ -363,47 +364,7 @@ elif st.session_state.page == 2:
     }
     st.dataframe(pd.DataFrame(data), use_container_width=True, hide_index=True)
 
-  with col_right:
-    st.markdown("### 📊 Biểu Đồ Radar Năng Lực Tự Chủ")
-
-    labels = np.array([
-        "T_off\n(Nỗ lực tư duy)",
-        "C_blind\n(Màng lọc phản biện)",
-        "F_off\n(Tính tự lực)",
-        "Metacognition\n(Siêu nhận thức)",
-    ])
-
-    stats = [
-        t_off * 100,
-        (1 - c_blind) * 100,
-        (1 - f_off) * 100,
-        max(0, 100 - coi),
-    ]
-
-    angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False).tolist()
-    stats = np.concatenate((stats, [stats[0]]))
-    angles = np.concatenate((angles, [angles[0]]))
-
-    fig, ax = plt.subplots(figsize=(4.6, 4.6), subplot_kw=dict(polar=True))
-    color_code = (
-        "#EF4444" if coi > 60 else ("#F59E0B" if coi >= 30 else "#10B981")
-    )
-
-    ax.plot(angles, stats, color=color_code, linewidth=2.5, linestyle="solid")
-    ax.fill(angles, stats, color=color_code, alpha=0.25)
-    ax.set_thetagrids(
-        np.degrees(angles[:-1]), labels, fontsize=9, fontweight="bold"
-    )
-
-    ax.set_ylim(0, 100)
-    ax.set_yticks([0, 20, 40, 60, 80, 100])
-    ax.set_yticklabels(
-        ["0", "20", "40", "60", "80", "100"], fontsize=7, color="gray"
-    )
-
-    st.pyplot(fig)
-
-    # 📌 KHỐI HƯỚNG DẪN XEM BIỂU ĐỒ RADAR TRỰC QUAN & SINH ĐỘNG
+    # 📌 ĐẶT KHỐI HƯỚNG DẪN XEM BIỂU ĐỒ VÀO CỘT TRÁI ĐỂ LẤP KHOẢNG TRỐNG
     st.markdown(
         """
         <div class="radar-guide-container">
@@ -435,6 +396,48 @@ elif st.session_state.page == 2:
         """,
         unsafe_allow_html=True,
     )
+
+  # ---------------- CỘT BÊN PHẢI ----------------
+  with col_right:
+    st.markdown("### 📊 Biểu Đồ Radar Năng Lực Tự Chủ")
+
+    labels = np.array([
+        "T_off\n(Nỗ lực tư duy)",
+        "C_blind\n(Màng lọc phản biện)",
+        "F_off\n(Tính tự lực)",
+        "Metacognition\n(Siêu nhận thức)",
+    ])
+
+    stats = [
+        t_off * 100,
+        (1 - c_blind) * 100,
+        (1 - f_off) * 100,
+        max(0, 100 - coi),
+    ]
+
+    angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False).tolist()
+    stats = np.concatenate((stats, [stats[0]]))
+    angles = np.concatenate((angles, [angles[0]]))
+
+    # Tăng kích thước biểu đồ để cân đối chiều cao với cột trái
+    fig, ax = plt.subplots(figsize=(6.2, 6.2), subplot_kw=dict(polar=True))
+    color_code = (
+        "#EF4444" if coi > 60 else ("#F59E0B" if coi >= 30 else "#10B981")
+    )
+
+    ax.plot(angles, stats, color=color_code, linewidth=2.5, linestyle="solid")
+    ax.fill(angles, stats, color=color_code, alpha=0.25)
+    ax.set_thetagrids(
+        np.degrees(angles[:-1]), labels, fontsize=10, fontweight="bold"
+    )
+
+    ax.set_ylim(0, 100)
+    ax.set_yticks([0, 20, 40, 60, 80, 100])
+    ax.set_yticklabels(
+        ["0", "20", "40", "60", "80", "100"], fontsize=8, color="gray"
+    )
+
+    st.pyplot(fig)
 
   st.markdown("---")
 
