@@ -12,11 +12,11 @@ st.set_page_config(
     layout="wide",
 )
 
-# STYLE CSS CHI TIẾT (BẢNG ĐẸP + NÚT BẤM MÀU XANH LÁ CHỮ SIÊU ĐẬM)
+# STYLE CSS CHI TIẾT (BẢNG ĐẸP + NÚT BẤM + CHỈNH LABEL BƯỚC 1 & BƯỚC 2)
 st.markdown(
     """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800;900&display=swap');
 
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
@@ -31,6 +31,20 @@ st.markdown(
     h1, h2, h3, h4, h5, h6 {
         font-family: 'Plus Jakarta Sans', sans-serif !important;
         letter-spacing: -0.02em !important;
+    }
+
+    /* ĐỊNH DẠNG FONT CHỮ ĐẸP CHO LABEL CỦA INPUT VÀ SLIDER (BƯỚC 1 & BƯỚC 2) */
+    .stTextInput > label,
+    .stSelectbox > label,
+    .stSlider > label,
+    div[data-widget="stTextInput"] label,
+    div[data-widget="stSelectbox"] label,
+    div[data-widget="stSlider"] label {
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        font-weight: 700 !important;
+        font-size: 15px !important;
+        color: #0F172A !important;
+        margin-bottom: 6px !important;
     }
 
     /* Header Banner */
@@ -61,16 +75,16 @@ st.markdown(
         text-transform: uppercase;
     }
     
-    /* OVERRIDE NÚT BẤM STREAMLIT - MÀU XANH LÁ + FONT CHỮ SIÊU ĐẬM (WEIGHT 900) */
+    /* OVERRIDE NÚT BẤM STREAMLIT - MÀU XANH LÁ + FONT CHỮ SIÊU ĐẬM */
     div.stButton > button,
     div.stButton > button *,
     div.stButton > button p,
     div.stButton > button span {
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-        font-weight: 900 !important; /* Độ đậm tối đa */
+        font-weight: 900 !important;
         font-size: 16px !important;
         color: #FFFFFF !important;
-        text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25) !important; /* Tạo nét chữ nổi đậm */
+        text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25) !important;
     }
 
     div.stButton > button {
@@ -83,7 +97,6 @@ st.markdown(
         transition: all 0.25s ease-in-out !important;
     }
 
-    /* HIỆU ỨNG HOVER NÚT BẤM */
     div.stButton > button:hover {
         background-color: #15803d !important;
         background: linear-gradient(135deg, #15803d 0%, #166534 100%) !important;
@@ -282,12 +295,12 @@ if st.session_state.page == 1:
   with col_center2:
     st.subheader("📋 Bước 1: Thông tin học sinh")
     student_name = st.text_input(
-        "Họ và tên học sinh:",
+        "Họ và tên học sinh",
         st.session_state.get("student_name", "Nguyễn Văn A"),
         placeholder="Nhập đầy đủ họ tên...",
     )
     grade = st.selectbox(
-        "Khối lớp:",
+        "Khối lớp",
         ["Khối 10", "Khối 11", "Khối 12"],
         index=["Khối 10", "Khối 11", "Khối 12"].index(
             st.session_state.get("grade", "Khối 10")
@@ -298,7 +311,7 @@ if st.session_state.page == 1:
     st.subheader("⚙️ Bước 2: Nhập chỉ số hành vi thực nghiệm")
 
     c_blind = st.slider(
-        "1. Tỷ lệ sao chép mù quáng (C_blind):",
+        "1. Tỷ lệ sao chép mù quáng (C_blind)",
         min_value=0.0,
         max_value=1.0,
         value=round(st.session_state.get("c_blind", 0.4), 1),
@@ -307,7 +320,7 @@ if st.session_state.page == 1:
     )
 
     f_off = st.slider(
-        "2. Tần suất cầu viện AI (F_off):",
+        "2. Tần suất cầu viện AI (F_off)",
         min_value=0.0,
         max_value=1.0,
         value=round(st.session_state.get("f_off", 0.6), 1),
@@ -316,7 +329,7 @@ if st.session_state.page == 1:
     )
 
     t_off = st.slider(
-        "3. Thời gian suy nghĩ độc lập (T_off):",
+        "3. Thời gian suy nghĩ độc lập (T_off)",
         min_value=0.0,
         max_value=1.0,
         value=round(st.session_state.get("t_off", 0.17), 2),
@@ -326,7 +339,6 @@ if st.session_state.page == 1:
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Nút bấm xuất báo cáo màu xanh lá chữ siêu đậm
     if st.button(
         "🚀 XUẤT BÁO CÁO PHÂN TÍCH & ĐÁNH GIÁ CHUYÊN SÂU",
         use_container_width=True,
@@ -355,7 +367,6 @@ elif st.session_state.page == 2:
   coi_calc = (a * f_off) - (b * t_off) + (c * c_blind)
   coi = round(max(0.0, coi_calc), 2)
 
-  # Nút quay lại màu xanh lá nhạt
   st.markdown('<div class="btn-back">', unsafe_allow_html=True)
   if st.button("← Quay lại trang nhập thông số"):
     st.session_state.page = 1
