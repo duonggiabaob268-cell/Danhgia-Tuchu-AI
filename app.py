@@ -4,7 +4,7 @@ import pandas as pd
 import streamlit as st
 
 # ==========================================
-# 1. THIẾT LẬP CẤU HÌNH TRANG WEB
+# 1. THIẾT LẬP CẤU HÌNH TRANG WEB & CSS TÙY CHỈNH
 # ==========================================
 st.set_page_config(
     page_title="Báo Cáo Tự Nhận Thức COI - NCKH",
@@ -31,6 +31,40 @@ st.markdown(
         color: #334155;
         margin-top: 10px;
         line-height: 1.6;
+    }
+    
+    /* Thiết kế thẻ Mức độ cảnh báo đẹp mắt */
+    .status-card {
+        padding: 12px 16px;
+        border-radius: 10px;
+        text-align: center;
+        margin-top: 5px;
+    }
+    .status-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 4px;
+    }
+    .status-desc {
+        font-size: 13px;
+        opacity: 0.9;
+    }
+    
+    /* 3 Mức màu sắc tùy chỉnh */
+    .status-danger {
+        background-color: #FEF2F2;
+        color: #991B1B;
+        border: 1px solid #FCA5A5;
+    }
+    .status-warning {
+        background-color: #FFFBEB;
+        color: #92400E;
+        border: 1px solid #FCD34D;
+    }
+    .status-success {
+        background-color: #F0FDF4;
+        color: #166534;
+        border: 1px solid #86EFAC;
     }
     </style>
 """,
@@ -105,14 +139,35 @@ with col_left:
     st.metric(label="Chỉ số Phụ thuộc AI (COI)", value=f"{coi} / 100")
   with m2:
     if coi > 60:
-      st.error("MỨC ĐỘ: CAO 🚨")
-      st.caption("Cảnh báo lạm dụng nghiêm trọng")
+      st.markdown(
+          """
+            <div class='status-card status-danger'>
+                <div class='status-title'>MỨC ĐỘ: CAO 🚨</div>
+                <div class='status-desc'>Cảnh báo lạm dụng nghiêm trọng</div>
+            </div>
+            """,
+          unsafe_allow_html=True,
+      )
     elif coi >= 30:
-      st.warning("MỨC ĐỘ: TRUNG BÌNH ⚠️")
-      st.caption("Có nguy cơ bắt đầu phụ thuộc")
+      st.markdown(
+          """
+            <div class='status-card status-warning'>
+                <div class='status-title'>MỨC ĐỘ: TRUNG BÌNH ⚠️</div>
+                <div class='status-desc'>Có nguy cơ bắt đầu phụ thuộc</div>
+            </div>
+            """,
+          unsafe_allow_html=True,
+      )
     else:
-      st.success("MỨC ĐỘ: THẤP ✅")
-      st.caption("Năng lực tự chủ tư duy tốt")
+      st.markdown(
+          """
+            <div class='status-card status-success'>
+                <div class='status-title'>MỨC ĐỘ: THẤP ✅</div>
+                <div class='status-desc'>Năng lực tự chủ tư duy tốt</div>
+            </div>
+            """,
+          unsafe_allow_html=True,
+      )
 
   st.markdown("### 📢 Cảnh Báo Thị Giác Trực Quan")
 
@@ -153,7 +208,7 @@ with col_left:
   df = pd.DataFrame(data)
   st.dataframe(df, use_container_width=True, hide_index=True)
 
-  # CÔNG THỨC TOÁN HỌC LATEX CHUẨN (DÙNG RAW STRING r"...")
+  # CÔNG THỨC TOÁN HỌC LATEX CHUẨN
   st.markdown("**Công thức toán học tính chỉ số COI:**")
   st.latex(
       r"\text{COI} = \max\left(0,\; 30 \cdot F_{\text{off}} - 20 \cdot"
@@ -202,7 +257,7 @@ with col_right:
 
   st.pyplot(fig)
 
-  # KHỐI CHÚ THÍCH SẠCH SẼ - KHÔNG LỖI ĐỊNH DẠNG
+  # KHỐI CHÚ THÍCH SẠCH SẼ
   st.markdown(
       """
   <div class='note-box'>
