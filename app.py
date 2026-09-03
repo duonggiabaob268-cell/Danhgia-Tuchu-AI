@@ -12,7 +12,7 @@ st.set_page_config(
     layout="wide",
 )
 
-# Style CSS tinh chỉnh loại bỏ khung rỗng và tối ưu giao diện
+# Style CSS tinh chỉnh
 st.markdown(
     """
     <style>
@@ -99,7 +99,18 @@ st.markdown(
         display: block;
     }
 
-    /* Thẻ Lộ trình Gamification xuống dòng rõ ràng */
+    /* Thẻ Hướng dẫn đọc Biểu đồ Radar */
+    .radar-guide-box {
+        background-color: #F1F5F9;
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin-top: 15px;
+        font-size: 14px;
+        line-height: 1.6;
+        border: 1px solid #E2E8F0;
+    }
+
+    /* Thẻ Lộ trình Gamification */
     .level-card {
         padding: 18px 20px;
         border-radius: 10px;
@@ -311,7 +322,6 @@ elif st.session_state.page == 2:
             f"{f_off*100:.0f}% ({f_off})",
             f"{t_off:.2f}",
         ],
-        "Trọng số mô hình": [f"c = {c}", f"a = {a}", f"b = {b}"],
     }
     st.dataframe(pd.DataFrame(data), use_container_width=True, hide_index=True)
 
@@ -354,6 +364,21 @@ elif st.session_state.page == 2:
     )
 
     st.pyplot(fig)
+
+    # 📌 KHỐI HƯỚNG DẪN XEM BIỂU ĐỒ RADAR
+    st.markdown(
+        """
+        <div class="radar-guide-box">
+            <b>💡 HƯỚNG DẪN ĐỌC BIỂU ĐỒ RADAR:</b><br>
+            • <b>Diện tích vùng phủ càng rộng:</b> Năng lực tự chủ tư duy và kiểm soát AI của bạn càng cao.<br>
+            • <b>T_off (Nỗ lực tư duy):</b> Càng xa tâm thể hiện sự kiên trì tự nháp/suy nghĩ trước khi dùng AI.<br>
+            • <b>C_blind (Màng lọc phản biện):</b> Càng xa tâm thể hiện khả năng chủ động đối soát, kiểm tra logic.<br>
+            • <b>F_off (Tính tự lực):</b> Càng xa tâm thể hiện mức độ tự lực làm bài mà không phụ thuộc vào AI.<br>
+            • <b>Metacognition (Siêu nhận thức):</b> Mức độ chủ động điều phối hành vi học tập cá nhân.
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
   st.markdown("---")
 
@@ -400,7 +425,7 @@ elif st.session_state.page == 2:
         <div class='eval-box status-danger'>
         <h4>🔴 MỨC ĐỘ CAO (COI = {coi:.2f}): BÁO ĐỘNG LẠM DỤNG & SUY GIẢM NĂNG LỰC TƯ DUY</h4>
         <span class='eval-section-title'>🚨 Cảnh báo nghiêm trọng:</span>
-        Học sinh đang phụ thuộc nghiêm trọng vào công cụ AI. Việc ủy thác toàn bộ bộ no cho máy tính xử lý đang khiến các phản xạ tư duy tự nhiên, kỹ năng phân tích và tư duy phản biện bị tiêu biến rõ rệt theo thời gian.<br><br>
+        Học sinh đang phụ thuộc nghiêm trọng vào công cụ AI. Việc ủy thác toàn bộ bộ não cho máy tính xử lý đang khiến các phản xạ tư duy tự nhiên, kỹ năng phân tích và tư duy phản biện bị tiêu biến rõ rệt theo thời gian.<br><br>
         <span class='eval-section-title'>❌ Biểu hiện lâm sàng:</span>
         • Vừa nhận bài tập liền lập tức sao chép câu hỏi gửi cho AI (T_off gần như bằng 0).<br>
         • Lấy nguyên văn kết quả do AI tạo ra dán vào bài nộp (C_blind chạm ngưỡng báo động) mà không cần hiểu bản chất lời giải.<br>
