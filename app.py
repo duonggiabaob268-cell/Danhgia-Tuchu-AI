@@ -99,15 +99,63 @@ st.markdown(
         display: block;
     }
 
-    /* Thẻ Hướng dẫn đọc Biểu đồ Radar */
-    .radar-guide-box {
-        background-color: #F1F5F9;
-        border-radius: 12px;
-        padding: 16px 20px;
+    /* CSS nâng cấp Hướng dẫn đọc Biểu đồ Radar Sinh Động */
+    .radar-guide-container {
+        background: #FFFFFF;
+        border-radius: 16px;
+        padding: 20px;
         margin-top: 15px;
-        font-size: 14px;
-        line-height: 1.6;
         border: 1px solid #E2E8F0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+    .radar-guide-header {
+        font-size: 16px;
+        font-weight: 800;
+        color: #1E293B;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .radar-main-tip {
+        background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+        border-left: 4px solid #2563EB;
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-size: 13.5px;
+        color: #1E40AF;
+        font-weight: 600;
+        margin-bottom: 14px;
+    }
+    .radar-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    .radar-card {
+        background: #F8FAFC;
+        border: 1px solid #F1F5F9;
+        border-radius: 10px;
+        padding: 10px 12px;
+        transition: all 0.2s ease;
+    }
+    .radar-card:hover {
+        border-color: #CBD5E1;
+        background: #F1F5F9;
+    }
+    .radar-card-title {
+        font-weight: 700;
+        font-size: 13px;
+        color: #0F172A;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .radar-card-desc {
+        font-size: 12px;
+        color: #475569;
+        line-height: 1.4;
     }
 
     /* Thẻ Lộ trình Gamification */
@@ -355,16 +403,34 @@ elif st.session_state.page == 2:
 
     st.pyplot(fig)
 
-    # 📌 KHỐI HƯỚNG DẪN XEM BIỂU ĐỒ RADAR
+    # 📌 KHỐI HƯỚNG DẪN XEM BIỂU ĐỒ RADAR TRỰC QUAN & SINH ĐỘNG
     st.markdown(
         """
-        <div class="radar-guide-box">
-            <b>💡 HƯỚNG DẪN ĐỌC BIỂU ĐỒ RADAR:</b><br>
-            • <b>Diện tích vùng phủ càng rộng:</b> Năng lực tự chủ tư duy và kiểm soát AI của bạn càng cao.<br>
-            • <b>T_off (Nỗ lực tư duy):</b> Càng xa tâm thể hiện sự kiên trì tự nháp/suy nghĩ trước khi dùng AI.<br>
-            • <b>C_blind (Màng lọc phản biện):</b> Càng xa tâm thể hiện khả năng chủ động đối soát, kiểm tra logic.<br>
-            • <b>F_off (Tính tự lực):</b> Càng xa tâm thể hiện mức độ tự lực làm bài mà không phụ thuộc vào AI.<br>
-            • <b>Metacognition (Siêu nhận thức):</b> Mức độ chủ động điều phối hành vi học tập cá nhân.
+        <div class="radar-guide-container">
+            <div class="radar-guide-header">
+                🧭 HƯỚNG DẪN ĐỌC BIỂU ĐỒ RADAR
+            </div>
+            <div class="radar-main-tip">
+                🎯 <b>Mẹo nhanh:</b> Vùng màu phủ càng <b>RỘNG & MỞ RỘNG RA RÌA</b> ➔ Năng lực tự chủ tư duy và kiểm soát AI của bạn càng cao!
+            </div>
+            <div class="radar-grid">
+                <div class="radar-card">
+                    <div class="radar-card-title">🧠 T_off (Nỗ lực tư duy)</div>
+                    <div class="radar-card-desc">Càng xa tâm thể hiện sự kiên trì tự nháp & suy nghĩ trước khi mở AI.</div>
+                </div>
+                <div class="radar-card">
+                    <div class="radar-card-title">🛡️ C_blind (Màng lọc phản biện)</div>
+                    <div class="radar-card-desc">Càng xa tâm thể hiện khả năng chủ động đối soát, soi lỗi đáp án AI.</div>
+                </div>
+                <div class="radar-card">
+                    <div class="radar-card-title">💪 F_off (Tính tự lực)</div>
+                    <div class="radar-card-desc">Càng xa tâm thể hiện mức độ tự lực làm bài mà không ỷ lại vào AI.</div>
+                </div>
+                <div class="radar-card">
+                    <div class="radar-card-title">👁️ Metacognition (Siêu nhận thức)</div>
+                    <div class="radar-card-desc">Mức độ chủ động điều phối và kiểm soát hành vi học tập cá nhân.</div>
+                </div>
+            </div>
         </div>
         """,
         unsafe_allow_html=True,
