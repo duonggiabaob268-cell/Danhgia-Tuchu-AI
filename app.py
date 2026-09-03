@@ -12,11 +12,11 @@ st.set_page_config(
     layout="wide",
 )
 
-# STYLE CSS CHI TIẾT (BẢNG ĐẸP + NÚT BẤM MÀU XANH LÁ FONT ĐẬM)
+# STYLE CSS CHI TIẾT (BẢNG ĐẸP + NÚT BẤM MÀU XANH LÁ CHỮ SIÊU ĐẬM)
 st.markdown(
     """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap');
 
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
@@ -46,7 +46,7 @@ st.markdown(
     .app-header-title {
         font-family: 'Plus Jakarta Sans', sans-serif !important;
         font-size: 32px;
-        font-weight: 800;
+        font-weight: 900;
         letter-spacing: 0.5px;
         margin: 0;
         text-transform: uppercase;
@@ -55,51 +55,58 @@ st.markdown(
     .app-header-subtitle {
         color: #DCFCE7;
         font-size: 14px;
-        font-weight: 600;
+        font-weight: 700;
         letter-spacing: 2.5px;
         margin-top: 8px;
         text-transform: uppercase;
     }
     
-    /* OVERRIDE TOÀN BỘ BUTTON TRONG STREAMLIT MÀU XANH LÁ + FONT ĐẬM */
+    /* OVERRIDE NÚT BẤM STREAMLIT - MÀU XANH LÁ + FONT CHỮ SIÊU ĐẬM (WEIGHT 900) */
     div.stButton > button,
-    div.stButton > button:first-child,
-    div.stButton > button:focus,
-    div.stButton > button:active {
+    div.stButton > button *,
+    div.stButton > button p,
+    div.stButton > button span {
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        font-weight: 900 !important; /* Độ đậm tối đa */
+        font-size: 16px !important;
+        color: #FFFFFF !important;
+        text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25) !important; /* Tạo nét chữ nổi đậm */
+    }
+
+    div.stButton > button {
         background-color: #16a34a !important;
         background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
-        color: #ffffff !important;
-        font-family: 'Plus Jakarta Sans', sans-serif !important;
-        font-weight: 800 !important;
-        font-size: 16px !important;
-        letter-spacing: 0.5px !important;
         border-radius: 12px !important;
         border: none !important;
-        height: 3.5em !important;
-        box-shadow: 0 4px 14px rgba(22, 163, 74, 0.35) !important;
+        height: 3.6em !important;
+        box-shadow: 0 4px 14px rgba(22, 163, 74, 0.4) !important;
         transition: all 0.25s ease-in-out !important;
     }
 
-    /* HIỆU ỨNG KHI DI CHUỘT VÀO NÚT (HOVER) */
+    /* HIỆU ỨNG HOVER NÚT BẤM */
     div.stButton > button:hover {
         background-color: #15803d !important;
         background: linear-gradient(135deg, #15803d 0%, #166534 100%) !important;
-        color: #ffffff !important;
         transform: translateY(-2px) !important;
-        box-shadow: 0 6px 20px rgba(22, 163, 74, 0.5) !important;
+        box-shadow: 0 6px 20px rgba(22, 163, 74, 0.55) !important;
         cursor: pointer !important;
     }
 
-    /* NÚT QUAY LẠI (TÔNG XANH LÁ NHẠT SANG TRỌNG) */
+    /* NÚT QUAY LẠI (TÔNG XANH LÁ NHẠT CHỮ ĐẬM) */
     .btn-back div.stButton > button {
         background: #DCFCE7 !important;
-        color: #15803D !important;
         border: 1.5px solid #86EFAC !important;
         box-shadow: none !important;
     }
+    .btn-back div.stButton > button,
+    .btn-back div.stButton > button *,
+    .btn-back div.stButton > button p {
+        color: #15803D !important;
+        font-weight: 800 !important;
+        text-shadow: none !important;
+    }
     .btn-back div.stButton > button:hover {
         background: #BBF7D0 !important;
-        color: #166534 !important;
         transform: translateX(-3px) !important;
     }
 
@@ -122,7 +129,7 @@ st.markdown(
         background-color: #F0FDF4;
         color: #166534;
         font-family: 'Plus Jakarta Sans', sans-serif;
-        font-weight: 700;
+        font-weight: 800;
         padding: 14px 18px;
         border-bottom: 2px solid #DCFCE7;
     }
@@ -145,7 +152,7 @@ st.markdown(
         padding: 16px;
         border-radius: 14px;
         text-align: center;
-        font-weight: 700;
+        font-weight: 800;
         font-family: 'Plus Jakarta Sans', sans-serif;
     }
     .status-danger { background-color: #FEF2F2; color: #991B1B; border: 1.5px solid #FCA5A5; }
@@ -197,7 +204,7 @@ st.markdown(
         border-radius: 10px;
         font-size: 14px;
         color: #166534;
-        font-weight: 600;
+        font-weight: 700;
         margin-bottom: 16px;
     }
     .radar-grid {
@@ -213,7 +220,7 @@ st.markdown(
     }
     .radar-card-title {
         font-family: 'Plus Jakarta Sans', sans-serif;
-        font-weight: 700;
+        font-weight: 800;
         font-size: 13.5px;
         color: #0F172A;
         margin-bottom: 6px;
@@ -319,7 +326,7 @@ if st.session_state.page == 1:
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Nút bấm xuất báo cáo chính màu xanh lá đậm
+    # Nút bấm xuất báo cáo màu xanh lá chữ siêu đậm
     if st.button(
         "🚀 XUẤT BÁO CÁO PHÂN TÍCH & ĐÁNH GIÁ CHUYÊN SÂU",
         use_container_width=True,
