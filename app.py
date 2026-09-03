@@ -68,9 +68,19 @@ st.markdown(
         box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35) !important;
     }
 
+    /* Khối Hồ Sơ Trung Tâm */
+    .profile-banner {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 16px;
+        padding: 20px 24px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    }
+
     /* Thẻ trạng thái kết quả */
     .status-card {
-        padding: 16px;
+        padding: 14px;
         border-radius: 12px;
         text-align: center;
         font-weight: 600;
@@ -156,6 +166,16 @@ st.markdown(
         font-size: 12.5px;
         color: #475569;
         line-height: 1.4;
+    }
+
+    /* Khối Biểu Đồ Radar bên phải */
+    .radar-chart-container {
+        background: #FFFFFF;
+        border-radius: 16px;
+        padding: 20px;
+        border: 1px solid #E2E8F0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        text-align: center;
     }
 
     /* Thẻ Lộ trình Gamification */
@@ -285,70 +305,73 @@ elif st.session_state.page == 2:
     st.session_state.page = 1
     st.rerun()
 
+  # ---------------- 1. KHỐI TRUNG TÂM (ĐẶT Ở GIỮA TRANG) ----------------
+  st.markdown(f"### 👤 Hồ sơ: **{student_name}** ({grade})")
+
+  m1, m2 = st.columns([1, 1])
+  with m1:
+    st.metric(label="Chỉ số Phụ thuộc AI (COI)", value=f"{coi} / 100")
+  with m2:
+    if coi > 60:
+      st.markdown(
+          """
+              <div class='status-card status-danger'>
+                  <div style='font-size: 16px;'>MỨC ĐỘ: CAO 🚨</div>
+                  <small>Cảnh báo lạm dụng nghiêm trọng</small>
+              </div>
+              """,
+          unsafe_allow_html=True,
+      )
+    elif coi >= 30:
+      st.markdown(
+          """
+              <div class='status-card status-warning'>
+                  <div style='font-size: 16px;'>MỨC ĐỘ: TRUNG BÌNH ⚠️</div>
+                  <small>Có nguy cơ bắt đầu phụ thuộc</small>
+              </div>
+              """,
+          unsafe_allow_html=True,
+      )
+    else:
+      st.markdown(
+          """
+              <div class='status-card status-success'>
+                  <div style='font-size: 16px;'>MỨC ĐỘ: THẤP ✅</div>
+                  <small>Năng lực tự chủ tư duy tốt</small>
+              </div>
+              """,
+          unsafe_allow_html=True,
+      )
+
+  # Cảnh báo thị giác nhanh ở vị trí trung tâm rộng
+  st.markdown("#### 📢 Cảnh Báo Thị Giác Nhanh")
+  if c_blind >= 0.5:
+    st.error(
+        f"🚨 **CẢNH BÁO SAO CHÉP MÙ QUÁNG:** Bạn đã dành đến"
+        f" **{c_blind*100:.0f}%** khối lượng bài làm để chép từ AI mà không qua"
+        " kiểm chứng phản biện!"
+    )
+  else:
+    st.info(
+        f"💡 Tỷ lệ chấp nhận đáp án AI chưa qua kiểm định: **{c_blind*100:.0f}%**."
+    )
+
+  if t_off <= 0.3:
+    st.warning(
+        f"⚠️ **CẢNH BÁO THỜI GIAN SUY NGHĨ T_off:** Chỉ số nỗ lực tư duy của bạn"
+        f" ở mức rất thấp (**{t_off:.2f}**). Hãy dành nhiều thời gian nháp độc"
+        " lập hơn."
+    )
+  else:
+    st.success(f"✅ Chỉ số nỗ lực tư duy T_off đạt mức tích cực: **{t_off:.2f}**.")
+
+  st.markdown("<br>", unsafe_allow_html=True)
+
+  # ---------------- 2. BỐ CỤC 2 CỘT CÂN BẰNG PHÍA DƯỚI ----------------
   col_left, col_right = st.columns([1, 1], gap="large")
 
-  # ---------------- CỘT BÊN TRÁI ----------------
+  # CỘT TRÁI: BẢNG BÁO CÁO CHI TIẾT + HƯỚNG DẪN ĐỌC BIỂU ĐỒ
   with col_left:
-    st.markdown(f"### 👤 Hồ sơ: **{student_name}** ({grade})")
-
-    m1, m2 = st.columns(2)
-    with m1:
-      st.metric(label="Chỉ số Phụ thuộc AI (COI)", value=f"{coi} / 100")
-    with m2:
-      if coi > 60:
-        st.markdown(
-            """
-                <div class='status-card status-danger'>
-                    <div style='font-size: 16px;'>MỨC ĐỘ: CAO 🚨</div>
-                    <small>Cảnh báo lạm dụng nghiêm trọng</small>
-                </div>
-                """,
-            unsafe_allow_html=True,
-        )
-      elif coi >= 30:
-        st.markdown(
-            """
-                <div class='status-card status-warning'>
-                    <div style='font-size: 16px;'>MỨC ĐỘ: TRUNG BÌNH ⚠️</div>
-                    <small>Có nguy cơ bắt đầu phụ thuộc</small>
-                </div>
-                """,
-            unsafe_allow_html=True,
-        )
-      else:
-        st.markdown(
-            """
-                <div class='status-card status-success'>
-                    <div style='font-size: 16px;'>MỨC ĐỘ: THẤP ✅</div>
-                    <small>Năng lực tự chủ tư duy tốt</small>
-                </div>
-                """,
-            unsafe_allow_html=True,
-        )
-
-    st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown("#### 📢 Cảnh Báo Thị Giác Nhanh")
-    if c_blind >= 0.5:
-      st.error(
-          f"🚨 **CẢNH BÁO SAO CHÉP MÙ QUÁNG:** Bạn đã dành đến"
-          f" **{c_blind*100:.0f}%** khối lượng bài làm để chép từ AI mà không qua"
-          " kiểm chứng phản biện!"
-      )
-    else:
-      st.info(
-          f"💡 Tỷ lệ chấp nhận đáp án AI chưa qua kiểm định:"
-          f" **{c_blind*100:.0f}%**."
-      )
-
-    if t_off <= 0.3:
-      st.warning(
-          f"⚠️ **CẢNH BÁO THỜI GIAN SUY NGHĨ T_off:** Chỉ số nỗ lực tư duy của"
-          f" bạn ở mức rất thấp (**{t_off:.2f}**). Hãy dành nhiều thời gian nháp"
-          " độc lập hơn."
-      )
-    else:
-      st.success(f"✅ Chỉ số nỗ lực tư duy T_off đạt mức tích cực: **{t_off:.2f}**.")
-
     st.markdown("#### 📐 Bảng Báo Cáo Chi Tiết Thông Số")
     data = {
         "Chỉ số hành vi": [
@@ -364,7 +387,7 @@ elif st.session_state.page == 2:
     }
     st.dataframe(pd.DataFrame(data), use_container_width=True, hide_index=True)
 
-    # 📌 ĐẶT KHỐI HƯỚNG DẪN XEM BIỂU ĐỒ VÀO CỘT TRÁI ĐỂ LẤP KHOẢNG TRỐNG
+    # KHỐI HƯỚNG DẪN XEM BIỂU ĐỒ RADAR
     st.markdown(
         """
         <div class="radar-guide-container">
@@ -397,9 +420,9 @@ elif st.session_state.page == 2:
         unsafe_allow_html=True,
     )
 
-  # ---------------- CỘT BÊN PHẢI ----------------
+  # CỘT PHẢI: BIỂU ĐỒ RADAR (NẰM NGANG HÀNG VỚI CẢ BẢNG BÁO CÁO & HƯỚNG DẪN)
   with col_right:
-    st.markdown("### 📊 Biểu Đồ Radar Năng Lực Tự Chủ")
+    st.markdown("#### 📊 Biểu Đồ Radar Năng Lực Tự Chủ")
 
     labels = np.array([
         "T_off\n(Nỗ lực tư duy)",
@@ -419,8 +442,8 @@ elif st.session_state.page == 2:
     stats = np.concatenate((stats, [stats[0]]))
     angles = np.concatenate((angles, [angles[0]]))
 
-    # Tăng kích thước biểu đồ để cân đối chiều cao với cột trái
-    fig, ax = plt.subplots(figsize=(6.2, 6.2), subplot_kw=dict(polar=True))
+    # Điều chỉnh chiều cao hình vẽ (figsize) cân xứng hoàn hảo với toàn bộ cột trái
+    fig, ax = plt.subplots(figsize=(5.4, 5.4), subplot_kw=dict(polar=True))
     color_code = (
         "#EF4444" if coi > 60 else ("#F59E0B" if coi >= 30 else "#10B981")
     )
@@ -428,7 +451,7 @@ elif st.session_state.page == 2:
     ax.plot(angles, stats, color=color_code, linewidth=2.5, linestyle="solid")
     ax.fill(angles, stats, color=color_code, alpha=0.25)
     ax.set_thetagrids(
-        np.degrees(angles[:-1]), labels, fontsize=10, fontweight="bold"
+        np.degrees(angles[:-1]), labels, fontsize=9.5, fontweight="bold"
     )
 
     ax.set_ylim(0, 100)
