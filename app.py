@@ -12,7 +12,7 @@ st.set_page_config(
     layout="wide",
 )
 
-# Style CSS tinh chỉnh Font chữ & Giao diện Đẹp
+# STYLE CSS CHI TIẾT (BẢNG ĐẸP + NÚT BẤM MÀU XANH LÁ FONT ĐẬM)
 st.markdown(
     """
     <style>
@@ -35,10 +35,10 @@ st.markdown(
 
     /* Header Banner */
     .app-header {
-        background: linear-gradient(135deg, #1E40AF 0%, #2563EB 50%, #3B82F6 100%);
+        background: linear-gradient(135deg, #15803D 0%, #16A34A 50%, #22C55E 100%);
         padding: 32px 30px;
         border-radius: 20px;
-        box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
+        box-shadow: 0 10px 25px -5px rgba(22, 163, 74, 0.3);
         text-align: center;
         margin-bottom: 28px;
         color: #FFFFFF;
@@ -53,7 +53,7 @@ st.markdown(
         line-height: 1.2;
     }
     .app-header-subtitle {
-        color: #E0F2FE;
+        color: #DCFCE7;
         font-size: 14px;
         font-weight: 600;
         letter-spacing: 2.5px;
@@ -61,43 +61,49 @@ st.markdown(
         text-transform: uppercase;
     }
     
-    /* STYLE NÚT BẤM (BUTTONS) MÀU XANH & FONT ĐẬM */
-    div.stButton > button {
+    /* OVERRIDE TOÀN BỘ BUTTON TRONG STREAMLIT MÀU XANH LÁ + FONT ĐẬM */
+    div.stButton > button,
+    div.stButton > button:first-child,
+    div.stButton > button:focus,
+    div.stButton > button:active {
+        background-color: #16a34a !important;
+        background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
+        color: #ffffff !important;
         font-family: 'Plus Jakarta Sans', sans-serif !important;
         font-weight: 800 !important;
-        letter-spacing: 0.3px !important;
+        font-size: 16px !important;
+        letter-spacing: 0.5px !important;
         border-radius: 12px !important;
-        height: 3.4em !important;
-        transition: all 0.25s ease-in-out !important;
-        font-size: 15px !important;
-    }
-
-    /* Nút chính: Xuất Báo Cáo - Nền Xanh Blue Đậm Đẹp */
-    .btn-primary div.stButton > button {
-        background: #2563EB !important;
-        color: #FFFFFF !important;
         border: none !important;
-        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35) !important;
-    }
-    .btn-primary div.stButton > button:hover {
-        background: #1D4ED8 !important;
-        transform: translateY(-2px) !important;
-        box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45) !important;
+        height: 3.5em !important;
+        box-shadow: 0 4px 14px rgba(22, 163, 74, 0.35) !important;
+        transition: all 0.25s ease-in-out !important;
     }
 
-    /* Nút phụ: Quay lại - Nền Xanh Nhạt Chữ Xanh Đậm */
+    /* HIỆU ỨNG KHI DI CHUỘT VÀO NÚT (HOVER) */
+    div.stButton > button:hover {
+        background-color: #15803d !important;
+        background: linear-gradient(135deg, #15803d 0%, #166534 100%) !important;
+        color: #ffffff !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(22, 163, 74, 0.5) !important;
+        cursor: pointer !important;
+    }
+
+    /* NÚT QUAY LẠI (TÔNG XANH LÁ NHẠT SANG TRỌNG) */
     .btn-back div.stButton > button {
-        background: #E0F2FE !important;
-        color: #0369A1 !important;
-        border: 1.5px solid #BAE6FD !important;
+        background: #DCFCE7 !important;
+        color: #15803D !important;
+        border: 1.5px solid #86EFAC !important;
+        box-shadow: none !important;
     }
     .btn-back div.stButton > button:hover {
-        background: #BAE6FD !important;
-        color: #075985 !important;
+        background: #BBF7D0 !important;
+        color: #166534 !important;
         transform: translateX(-3px) !important;
     }
 
-    /* BẢNG DỮ LIỆU ĐƯỢC THIẾT KẾ ĐẸP & SANG TRỌNG */
+    /* BẢNG DỮ LIỆU ĐƯỢC THIẾT KẾ SANG TRỌNG */
     .custom-table-container {
         border-radius: 14px;
         overflow: hidden;
@@ -113,7 +119,7 @@ st.markdown(
         text-align: left;
     }
     .custom-table th {
-        background-color: #F0Fdf4;
+        background-color: #F0FDF4;
         color: #166534;
         font-family: 'Plus Jakarta Sans', sans-serif;
         font-weight: 700;
@@ -185,12 +191,12 @@ st.markdown(
         margin-bottom: 14px;
     }
     .radar-main-tip {
-        background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
-        border-left: 4px solid #2563EB;
+        background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+        border-left: 4px solid #16A34A;
         padding: 12px 16px;
         border-radius: 10px;
         font-size: 14px;
-        color: #1E40AF;
+        color: #166534;
         font-weight: 600;
         margin-bottom: 16px;
     }
@@ -313,11 +319,11 @@ if st.session_state.page == 1:
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Nút bấm xuất báo cáo màu xanh dương đậm
-    st.markdown('<div class="btn-primary">', unsafe_allow_html=True)
+    # Nút bấm xuất báo cáo chính màu xanh lá đậm
     if st.button(
         "🚀 XUẤT BÁO CÁO PHÂN TÍCH & ĐÁNH GIÁ CHUYÊN SÂU",
         use_container_width=True,
+        type="primary",
     ):
       st.session_state.student_name = student_name
       st.session_state.grade = grade
@@ -327,7 +333,6 @@ if st.session_state.page == 1:
 
       st.session_state.page = 2
       st.rerun()
-    st.markdown("</div>", unsafe_allow_html=True)
 
 # ==========================================
 # TRANG 2: BÁO CÁO KẾT QUẢ
@@ -343,7 +348,7 @@ elif st.session_state.page == 2:
   coi_calc = (a * f_off) - (b * t_off) + (c * c_blind)
   coi = round(max(0.0, coi_calc), 2)
 
-  # Nút quay lại màu xanh nhạt
+  # Nút quay lại màu xanh lá nhạt
   st.markdown('<div class="btn-back">', unsafe_allow_html=True)
   if st.button("← Quay lại trang nhập thông số"):
     st.session_state.page = 1
@@ -416,7 +421,6 @@ elif st.session_state.page == 2:
   with col_left:
     st.markdown("#### 📐 Bảng Báo Cáo Chi Tiết Thông Số")
 
-    # Bảng thiết kế bằng HTML/CSS cực kỳ đẹp mắt
     table_html = f"""
     <div class="custom-table-container">
         <table class="custom-table">
