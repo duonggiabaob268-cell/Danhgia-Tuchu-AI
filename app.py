@@ -22,13 +22,6 @@ st.markdown(
         text-align: center;
         margin-bottom: 25px;
     }
-    .sub-title {
-        font-size: 18px;
-        font-weight: bold;
-        color: #1E40AF;
-        margin-top: 15px;
-        margin-bottom: 10px;
-    }
     .note-box {
         background-color: #F8FAFC;
         padding: 14px 18px;
@@ -79,8 +72,8 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Khởi tạo trạng thái chuyển trang nếu chưa có
-if "page" not in st.state_dict:
+# Khởi tạo trạng thái chuyển trang đúng cú pháp
+if "page" not in st.session_state:
   st.session_state.page = 1
 
 # ==========================================
@@ -148,14 +141,12 @@ if st.session_state.page == 1:
     if st.button(
         "🚀 XUẤT BÁO CÁO KẾT QUẢ & ĐÁNH GIÁ", use_container_width=True
     ):
-      # Lưu dữ liệu vào session state
       st.session_state.student_name = student_name
       st.session_state.grade = grade
       st.session_state.c_blind = c_blind
       st.session_state.f_off = f_off
       st.session_state.t_off = t_off
 
-      # Chuyển sang trang 2
       st.session_state.page = 2
       st.rerun()
 
@@ -163,19 +154,16 @@ if st.session_state.page == 1:
 # TRANG 2: BÁO CÁO KẾT QUẢ & LỘ TRÌNH
 # ==========================================
 elif st.session_state.page == 2:
-  # Lấy dữ liệu từ session_state
   student_name = st.session_state.student_name
   grade = st.session_state.grade
   c_blind = st.session_state.c_blind
   f_off = st.session_state.f_off
   t_off = st.session_state.t_off
 
-  # Tính toán COI
   a, b, c = 30, 20, 70
   coi_calc = (a * f_off) - (b * t_off) + (c * c_blind)
   coi = round(max(0.0, coi_calc), 2)
 
-  # Nút quay lại trang 1 ở góc trên
   if st.button("⬅️ Nhập lại thông tin"):
     st.session_state.page = 1
     st.rerun()
@@ -185,9 +173,6 @@ elif st.session_state.page == 2:
       unsafe_allow_html=True,
   )
 
-  # ------------------------------------------
-  # PHẦN 1: TỔNG QUAN KẾT QUẢ & BIỂU ĐỒ RADAR
-  # ------------------------------------------
   col_left, col_right = st.columns([1.1, 0.9])
 
   with col_left:
@@ -251,7 +236,6 @@ elif st.session_state.page == 2:
     else:
       st.success(f"✅ Chỉ số nỗ lực tư duy T_off đạt mức tích cực: **{t_off:.2f}**.")
 
-    # Bảng thông số
     st.markdown("#### 📐 Bảng Thông Số Chi Tiết")
     data = {
         "Chỉ số hành vi": [
@@ -323,58 +307,46 @@ elif st.session_state.page == 2:
         unsafe_allow_html=True,
     )
 
-  # ------------------------------------------
-  # PHẦN 2: ĐÁNH GIÁ CHI TIẾT THEO MỨC ĐỘ
-  # ------------------------------------------
   st.markdown("---")
   st.markdown("### 📝 ĐÁNH GIÁ TỰ NHẬN THỨC CHI TIẾT")
 
   if coi < 30:
     st.markdown(
-        """
+        f"""
         <div class='eval-box status-success'>
-        <h4>🟢 MỨC ĐỘ THẤP (COI = {:.2f}): NĂNG LỰC TỰ CHỦ & TƯ DUY ĐỘC LẬP TỐT</h4>
+        <h4>🟢 MỨC ĐỘ THẤP (COI = {coi:.2f}): NĂNG LỰC TỰ CHỦ & TƯ DUY ĐỘC LẬP TỐT</h4>
         • <b>Đánh giá tổng quan:</b> Học sinh thể hiện tinh thần tự chủ rất cao trong quá trình học tập. AI chỉ đóng vai trò là một công cụ hỗ trợ mở rộng kiến thức chứ không ảnh hưởng đến khả năng tư duy độc lập của học sinh.<br>
         • <b>Điểm mạnh:</b> Dành thời gian tự nháp và phân tích bài tập (T_off cao) trước khi tìm kiếm sự hỗ trợ từ công nghệ. Có tư duy phản biện tốt, duy trì thói quen kiểm tra và sàng lọc thông tin từ AI (C_blind thấp).<br>
         • <b>Khuyến nghị định hướng:</b> Tiếp tục duy trì phương pháp học tập chủ động hiện tại. Khuyến khích ứng dụng AI ở các cấp độ cao hơn như: phản biện ý tưởng, tối ưu hóa giải pháp hoặc sáng tạo dự án.
         </div>
-        """.format(
-            coi
-        ),
+        """,
         unsafe_allow_html=True,
     )
   elif coi <= 60:
     st.markdown(
-        """
+        f"""
         <div class='eval-box status-warning'>
-        <h4>🟡 MỨC ĐỘ TRUNG BÌNH (COI = {:.2f}): NGUY CƠ BẮT ĐẦU PHỤ THUỘC AI</h4>
+        <h4>🟡 MỨC ĐỘ TRUNG BÌNH (COI = {coi:.2f}): NGUY CƠ BẮT ĐẦU PHỤ THUỘC AI</h4>
         • <b>Đánh giá tổng quan:</b> Học sinh bắt đầu xuất hiện dấu hiệu phụ thuộc thói quen vào AI. Dù vẫn có khả năng tự làm bài, học sinh có xu hướng ngả sang việc tìm kiếm đáp án nhanh từ AI khi gặp các dạng bài khó hoặc áp lực thời gian.<br>
         • <b>Điểm cần lưu ý:</b> Tần suất hỏi AI (F_off) hoặc thời gian tự suy nghĩ (T_off) đang ở ngưỡng báo động, cho thấy sự thiếu kiên nhẫn khi đối mặt với bài tập phức tạp. Đôi khi còn chủ quan chấp nhận câu trả lời của AI mà chưa qua bước đối soát logic.<br>
         • <b>Khuyến nghị định hướng:</b> Áp dụng "Quy tắc 15 phút" - Bắt buộc tự suy nghĩ và viết nháp tối thiểu 15 phút trước khi tra cứu AI. Đổi thói quen đặt câu hỏi: Chỉ nhờ AI gợi ý phương pháp/khung ý tưởng, tuyệt đối không xin lời giải trực tiếp.
         </div>
-        """.format(
-            coi
-        ),
+        """,
         unsafe_allow_html=True,
     )
   else:
     st.markdown(
-        """
+        f"""
         <div class='eval-box status-danger'>
-        <h4>🔴 MỨC ĐỘ CAO (COI = {:.2f}): CẢNH BÁO LẠM DỤNG & SUY GIẢM TƯ DUY</h4>
+        <h4>🔴 MỨC ĐỘ CAO (COI = {coi:.2f}): CẢNH BÁO LẠM DỤNG & SUY GIẢM TƯ DUY</h4>
         • <b>Đánh giá tổng quan:</b> <b>Cảnh báo nghiêm trọng:</b> Học sinh đang lạm dụng AI ở mức độ cao. Hành vi này đang làm tiêu biến dần năng lực tư duy độc lập, kỹ năng giải quyết vấn đề và tư duy phản biện cá nhân.<br>
         • <b>Biểu hiện rủi ro:</b> Lập tức hỏi AI ngay khi nhận đề bài mà không trải qua quá trình tự suy nghĩ (T_off gần như bằng 0). Sao chép nguyên văn kết quả từ AI (C_blind cao), thụ động tin tưởng tuyệt đối vào máy móc mà không nhận diện được các lỗi ảo giác (hallucination) của AI.<br>
         • <b>Biện pháp can thiệp gấp:</b> Thực hiện "Thử thách Cai nghiện AI": Hoàn toàn không dùng AI trong 1–2 tuần đối với các bài tập về nhà để khôi phục thói quen tự tư duy. Yêu cầu nộp kèm bản nháp tay cùng với bài làm chính thức.
         </div>
-        """.format(
-            coi
-        ),
+        """,
         unsafe_allow_html=True,
     )
 
-  # ------------------------------------------
-  # PHẦN 3: LỘ TRÌNH RÈN LUYỆN GAMIFICATION
-  # ------------------------------------------
   st.markdown("---")
   st.markdown("### 🎯 LỘ TRÌNH GAMIFICATION: 4 BƯỚC CHUYỂN HÓA TƯ DUY")
   st.write(
@@ -382,7 +354,6 @@ elif st.session_state.page == 2:
       " lĩnh tự học:"
   )
 
-  # Level 1
   st.markdown("##### 🟢 Level 1: Nỗ Lực Tư Duy Độc Lập (T_off)")
   st.checkbox(
       "Cam kết tự nháp và suy nghĩ tối thiểu 10–15 phút trước khi mở AI trợ"
@@ -391,7 +362,6 @@ elif st.session_state.page == 2:
   )
   st.markdown("---")
 
-  # Level 2
   st.markdown(
       "##### 🟡 Level 2: Hỏi Định Hướng & Phương Pháp - Không Hỏi Đáp Án"
   )
@@ -402,7 +372,6 @@ elif st.session_state.page == 2:
   )
   st.markdown("---")
 
-  # Level 3
   st.markdown("##### 🟠 Level 3: Kiểm Chứng Phản Biện (C_blind)")
   st.checkbox(
       "Đóng vai người kiểm duyệt: Chủ động truy tìm ít nhất 1 lỗi logic hoặc"
@@ -411,7 +380,6 @@ elif st.session_state.page == 2:
   )
   st.markdown("---")
 
-  # Level 4
   st.markdown("##### 🔴 Level 4: Làm Chủ Công Nghệ Hoàn Toàn")
   st.checkbox(
       "Hoàn thành 1 bài tập phức tạp 100% bằng năng lực cá nhân, sau đó chỉ"
