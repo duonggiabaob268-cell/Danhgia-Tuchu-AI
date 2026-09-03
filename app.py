@@ -16,27 +16,24 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    /* NHẬP FONT CHỮ HIỆN ĐẠI TỪ GOOGLE FONTS */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
 
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
-    /* Font mặc định cho toàn bộ ứng dụng */
     html, body, [class*="css"], .stApp {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
         background-color: #F8FAFC;
         color: #1E293B;
     }
     
-    /* Cấu hình Typography cho các thẻ Tiêu đề Streamlit */
     h1, h2, h3, h4, h5, h6 {
         font-family: 'Plus Jakarta Sans', sans-serif !important;
         letter-spacing: -0.02em !important;
     }
 
-    /* Header Banner sáng & đẹp */
+    /* Header Banner */
     .app-header {
         background: linear-gradient(135deg, #1E40AF 0%, #2563EB 50%, #3B82F6 100%);
         padding: 32px 30px;
@@ -54,10 +51,8 @@ st.markdown(
         margin: 0;
         text-transform: uppercase;
         line-height: 1.2;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
     .app-header-subtitle {
-        font-family: 'Inter', sans-serif !important;
         color: #E0F2FE;
         font-size: 14px;
         font-weight: 600;
@@ -66,45 +61,80 @@ st.markdown(
         text-transform: uppercase;
     }
     
-    /* TỐI ƯU CÁC NÚT BẤM (BUTTONS) SANG TRỌNG & HIỆN ĐẠI */
+    /* STYLE NÚT BẤM (BUTTONS) MÀU XANH & FONT ĐẬM */
     div.stButton > button {
         font-family: 'Plus Jakarta Sans', sans-serif !important;
-        font-weight: 700 !important;
+        font-weight: 800 !important;
         letter-spacing: 0.3px !important;
         border-radius: 12px !important;
-        height: 3.2em !important;
+        height: 3.4em !important;
         transition: all 0.25s ease-in-out !important;
         font-size: 15px !important;
     }
 
-    /* Style riêng cho nút Quay lại (Nút phụ / Secondary Button) */
+    /* Nút chính: Xuất Báo Cáo - Nền Xanh Blue Đậm Đẹp */
+    .btn-primary div.stButton > button {
+        background: #2563EB !important;
+        color: #FFFFFF !important;
+        border: none !important;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35) !important;
+    }
+    .btn-primary div.stButton > button:hover {
+        background: #1D4ED8 !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45) !important;
+    }
+
+    /* Nút phụ: Quay lại - Nền Xanh Nhạt Chữ Xanh Đậm */
     .btn-back div.stButton > button {
-        background: #FFFFFF !important;
-        color: #334155 !important;
-        border: 1.5px solid #CBD5E1 !important;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04) !important;
+        background: #E0F2FE !important;
+        color: #0369A1 !important;
+        border: 1.5px solid #BAE6FD !important;
     }
     .btn-back div.stButton > button:hover {
-        background: #F1F5F9 !important;
-        border-color: #94A3B8 !important;
-        color: #0F172A !important;
+        background: #BAE6FD !important;
+        color: #075985 !important;
         transform: translateX(-3px) !important;
     }
 
-    /* Style cho nút Xuất Báo Cáo (Nút chính / Primary Action) */
-    .btn-primary div.stButton > button {
-        background: linear-gradient(135deg, #4F46E5 0%, #2563EB 100%) !important;
-        color: #FFFFFF !important;
-        border: none !important;
-        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important;
+    /* BẢNG DỮ LIỆU ĐƯỢC THIẾT KẾ ĐẸP & SANG TRỌNG */
+    .custom-table-container {
+        border-radius: 14px;
+        overflow: hidden;
+        border: 1px solid #E2E8F0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        background: #FFFFFF;
+        margin-bottom: 20px;
     }
-    .btn-primary div.stButton > button:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 20px rgba(79, 70, 229, 0.45) !important;
-        background: linear-gradient(135deg, #4338CA 0%, #1D4ED8 100%) !important;
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 15px;
+        text-align: left;
+    }
+    .custom-table th {
+        background-color: #F0Fdf4;
+        color: #166534;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 700;
+        padding: 14px 18px;
+        border-bottom: 2px solid #DCFCE7;
+    }
+    .custom-table td {
+        padding: 14px 18px;
+        border-bottom: 1px solid #F1F5F9;
+        color: #334155;
+        font-weight: 600;
+    }
+    .custom-table tr:last-child td {
+        border-bottom: none;
+    }
+    .custom-table td.val-col {
+        font-weight: 800;
+        color: #0F172A;
     }
 
-    /* Thẻ trạng thái kết quả */
+    /* Status Cards */
     .status-card {
         padding: 16px;
         border-radius: 14px;
@@ -116,7 +146,7 @@ st.markdown(
     .status-warning { background-color: #FFFBEB; color: #92400E; border: 1.5px solid #FCD34D; }
     .status-success { background-color: #F0FDF4; color: #166534; border: 1.5px solid #86EFAC; }
     
-    /* Khối đánh giá chi tiết */
+    /* Evaluation Box */
     .eval-box {
         padding: 26px;
         border-radius: 16px;
@@ -132,18 +162,18 @@ st.markdown(
     }
     .eval-section-title {
         font-family: 'Plus Jakarta Sans', sans-serif;
-        font-weight: 700;
+        font-weight: 800;
         margin-top: 14px;
         display: block;
         font-size: 15.5px;
     }
 
-    /* Hướng dẫn đọc Biểu đồ Radar đặt dưới cột trái */
+    /* Radar Guide Box */
     .radar-guide-container {
         background: #FFFFFF;
         border-radius: 16px;
         padding: 22px;
-        margin-top: 20px;
+        margin-top: 10px;
         border: 1px solid #E2E8F0;
         box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
     }
@@ -153,9 +183,6 @@ st.markdown(
         font-weight: 800;
         color: #0F172A;
         margin-bottom: 14px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
     }
     .radar-main-tip {
         background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
@@ -166,7 +193,6 @@ st.markdown(
         color: #1E40AF;
         font-weight: 600;
         margin-bottom: 16px;
-        line-height: 1.5;
     }
     .radar-grid {
         display: grid;
@@ -178,11 +204,6 @@ st.markdown(
         border: 1px solid #E2E8F0;
         border-radius: 12px;
         padding: 14px;
-        transition: all 0.2s ease;
-    }
-    .radar-card:hover {
-        border-color: #94A3B8;
-        background: #F1F5F9;
     }
     .radar-card-title {
         font-family: 'Plus Jakarta Sans', sans-serif;
@@ -190,9 +211,6 @@ st.markdown(
         font-size: 13.5px;
         color: #0F172A;
         margin-bottom: 6px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
     }
     .radar-card-desc {
         font-size: 12.5px;
@@ -200,13 +218,12 @@ st.markdown(
         line-height: 1.5;
     }
 
-    /* Thẻ Lộ trình Gamification */
+    /* Gamification Cards */
     .level-card {
         padding: 20px 22px;
         border-radius: 14px;
         margin-top: 16px;
         margin-bottom: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     }
     .level-card-easy { border-left: 6px solid #10B981; background: #ECFDF5; }
     .level-card-medium { border-left: 6px solid #F59E0B; background: #FFFBEB; }
@@ -229,7 +246,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Khởi tạo Session State quản lý chuyển trang
+# Khởi tạo Session State
 if "page" not in st.session_state:
   st.session_state.page = 1
 
@@ -274,7 +291,6 @@ if st.session_state.page == 1:
         value=round(st.session_state.get("c_blind", 0.4), 1),
         step=0.1,
         format="%.1f",
-        help="Tỷ lệ bài làm chép nguyên văn từ AI không qua kiểm chứng",
     )
 
     f_off = st.slider(
@@ -284,7 +300,6 @@ if st.session_state.page == 1:
         value=round(st.session_state.get("f_off", 0.6), 1),
         step=0.1,
         format="%.1f",
-        help="Tỷ lệ câu hỏi gửi lệnh cho AI xử lý",
     )
 
     t_off = st.slider(
@@ -294,12 +309,11 @@ if st.session_state.page == 1:
         value=round(st.session_state.get("t_off", 0.17), 2),
         step=0.01,
         format="%.2f",
-        help="Chỉ số thời gian/nỗ lực suy nghĩ trước khi hỏi AI",
     )
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Nút bấm xuất báo cáo với style gradient đẹp mắt
+    # Nút bấm xuất báo cáo màu xanh dương đậm
     st.markdown('<div class="btn-primary">', unsafe_allow_html=True)
     if st.button(
         "🚀 XUẤT BÁO CÁO PHÂN TÍCH & ĐÁNH GIÁ CHUYÊN SÂU",
@@ -316,7 +330,7 @@ if st.session_state.page == 1:
     st.markdown("</div>", unsafe_allow_html=True)
 
 # ==========================================
-# TRANG 2: BÁO CÁO KẾT QUẢ & LỘ TRÌNH CHUYÊN SÂU
+# TRANG 2: BÁO CÁO KẾT QUẢ
 # ==========================================
 elif st.session_state.page == 2:
   student_name = st.session_state.get("student_name", "N/A")
@@ -329,14 +343,13 @@ elif st.session_state.page == 2:
   coi_calc = (a * f_off) - (b * t_off) + (c * c_blind)
   coi = round(max(0.0, coi_calc), 2)
 
-  # Nút quay lại với style Ghost Button tinh tế
+  # Nút quay lại màu xanh nhạt
   st.markdown('<div class="btn-back">', unsafe_allow_html=True)
   if st.button("← Quay lại trang nhập thông số"):
     st.session_state.page = 1
     st.rerun()
   st.markdown("</div>", unsafe_allow_html=True)
 
-  # ---------------- 1. KHỐI TRUNG TÂM (ĐẶT Ở GIỮA TRANG) ----------------
   st.markdown(f"### 👤 Hồ sơ: **{student_name}** ({grade})")
 
   m1, m2 = st.columns([1, 1])
@@ -374,7 +387,6 @@ elif st.session_state.page == 2:
           unsafe_allow_html=True,
       )
 
-  # Cảnh báo thị giác nhanh ở vị trí trung tâm rộng
   st.markdown("#### 📢 Cảnh Báo Thị Giác Nhanh")
   if c_blind >= 0.5:
     st.error(
@@ -398,27 +410,41 @@ elif st.session_state.page == 2:
 
   st.markdown("<br>", unsafe_allow_html=True)
 
-  # ---------------- 2. BỐ CỤC 2 CỘT CÂN BẰNG PHÍA DƯỚI ----------------
   col_left, col_right = st.columns([1, 1], gap="large")
 
-  # CỘT TRÁI: BẢNG BÁO CÁO CHI TIẾT + HƯỚNG DẪN ĐỌC BIỂU ĐỒ
+  # CỘT TRÁI: BẢNG BÁO CÁO CẢI TIẾN SANG TRỌNG
   with col_left:
     st.markdown("#### 📐 Bảng Báo Cáo Chi Tiết Thông Số")
-    data = {
-        "Chỉ số hành vi": [
-            "1. Tỷ lệ dán mù (C_blind)",
-            "2. Tần suất hỏi AI (F_off)",
-            "3. Thời gian suy nghĩ (T_off)",
-        ],
-        "Giá trị đo lường": [
-            f"{c_blind*100:.0f}% ({c_blind})",
-            f"{f_off*100:.0f}% ({f_off})",
-            f"{t_off:.2f}",
-        ],
-    }
-    st.dataframe(pd.DataFrame(data), use_container_width=True, hide_index=True)
 
-    # KHỐI HƯỚNG DẪN XEM BIỂU ĐỒ RADAR
+    # Bảng thiết kế bằng HTML/CSS cực kỳ đẹp mắt
+    table_html = f"""
+    <div class="custom-table-container">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>Chỉ số hành vi</th>
+                    <th>Giá trị đo lường</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1. Tỷ lệ dán mù (C_blind)</td>
+                    <td class="val-col">{c_blind*100:.0f}% ({c_blind})</td>
+                </tr>
+                <tr>
+                    <td>2. Tần suất hỏi AI (F_off)</td>
+                    <td class="val-col">{f_off*100:.0f}% ({f_off})</td>
+                </tr>
+                <tr>
+                    <td>3. Thời gian suy nghĩ (T_off)</td>
+                    <td class="val-col">{t_off:.2f}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    """
+    st.markdown(table_html, unsafe_allow_html=True)
+
     st.markdown(
         """
         <div class="radar-guide-container">
@@ -473,7 +499,6 @@ elif st.session_state.page == 2:
     stats = np.concatenate((stats, [stats[0]]))
     angles = np.concatenate((angles, [angles[0]]))
 
-    # Áp dụng Font chữ thống nhất cho Biểu đồ Matplotlib
     plt.rcParams["font.sans-serif"] = "DejaVu Sans"
     fig, ax = plt.subplots(figsize=(5.4, 5.4), subplot_kw=dict(polar=True))
     color_code = (
@@ -497,7 +522,7 @@ elif st.session_state.page == 2:
   st.markdown("---")
 
   # ==========================================
-  # PHẦN ĐÁNH GIÁ TỰ NHẬN THỨC CHI TIẾT (ĐÃ BỎ DẤU 2 CHẤM BÀI TRÊN)
+  # PHẦN ĐÁNH GIÁ TỰ NHẬN THỨC CHI TIẾT
   # ==========================================
   st.markdown("### 📝 ĐÁNH GIÁ TỰ NHẬN THỨC CHI TIẾT")
 
