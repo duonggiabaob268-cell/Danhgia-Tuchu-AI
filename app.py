@@ -66,24 +66,42 @@ st.markdown(
         text-transform: uppercase;
     }
     
-    /* Style cho Nút Bấm Chuyển Trang & Tương Tác */
+    /* TỐI ƯU CÁC NÚT BẤM (BUTTONS) SANG TRỌNG & HIỆN ĐẠI */
     div.stButton > button {
         font-family: 'Plus Jakarta Sans', sans-serif !important;
         font-weight: 700 !important;
         letter-spacing: 0.3px !important;
-        border-radius: 14px !important;
-        height: 3.4em !important;
-        background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%) !important;
+        border-radius: 12px !important;
+        height: 3.2em !important;
+        transition: all 0.25s ease-in-out !important;
+        font-size: 15px !important;
+    }
+
+    /* Style riêng cho nút Quay lại (Nút phụ / Secondary Button) */
+    .btn-back div.stButton > button {
+        background: #FFFFFF !important;
+        color: #334155 !important;
+        border: 1.5px solid #CBD5E1 !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04) !important;
+    }
+    .btn-back div.stButton > button:hover {
+        background: #F1F5F9 !important;
+        border-color: #94A3B8 !important;
+        color: #0F172A !important;
+        transform: translateX(-3px) !important;
+    }
+
+    /* Style cho nút Xuất Báo Cáo (Nút chính / Primary Action) */
+    .btn-primary div.stButton > button {
+        background: linear-gradient(135deg, #4F46E5 0%, #2563EB 100%) !important;
         color: #FFFFFF !important;
         border: none !important;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3) !important;
-        font-size: 16px !important;
+        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important;
     }
-    div.stButton > button:hover {
+    .btn-primary div.stButton > button:hover {
         transform: translateY(-2px) !important;
-        box-shadow: 0 8px 22px rgba(37, 99, 235, 0.45) !important;
-        background: linear-gradient(135deg, #1D4ED8 0%, #1E40AF 100%) !important;
+        box-shadow: 0 8px 20px rgba(79, 70, 229, 0.45) !important;
+        background: linear-gradient(135deg, #4338CA 0%, #1D4ED8 100%) !important;
     }
 
     /* Thẻ trạng thái kết quả */
@@ -115,7 +133,7 @@ st.markdown(
     .eval-section-title {
         font-family: 'Plus Jakarta Sans', sans-serif;
         font-weight: 700;
-        margin-top: 12px;
+        margin-top: 14px;
         display: block;
         font-size: 15.5px;
     }
@@ -280,6 +298,9 @@ if st.session_state.page == 1:
     )
 
     st.markdown("<br>", unsafe_allow_html=True)
+
+    # Nút bấm xuất báo cáo với style gradient đẹp mắt
+    st.markdown('<div class="btn-primary">', unsafe_allow_html=True)
     if st.button(
         "🚀 XUẤT BÁO CÁO PHÂN TÍCH & ĐÁNH GIÁ CHUYÊN SÂU",
         use_container_width=True,
@@ -292,6 +313,7 @@ if st.session_state.page == 1:
 
       st.session_state.page = 2
       st.rerun()
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # ==========================================
 # TRANG 2: BÁO CÁO KẾT QUẢ & LỘ TRÌNH CHUYÊN SÂU
@@ -307,9 +329,12 @@ elif st.session_state.page == 2:
   coi_calc = (a * f_off) - (b * t_off) + (c * c_blind)
   coi = round(max(0.0, coi_calc), 2)
 
-  if st.button("⬅️ Quay lại trang nhập thông số"):
+  # Nút quay lại với style Ghost Button tinh tế
+  st.markdown('<div class="btn-back">', unsafe_allow_html=True)
+  if st.button("← Quay lại trang nhập thông số"):
     st.session_state.page = 1
     st.rerun()
+  st.markdown("</div>", unsafe_allow_html=True)
 
   # ---------------- 1. KHỐI TRUNG TÂM (ĐẶT Ở GIỮA TRANG) ----------------
   st.markdown(f"### 👤 Hồ sơ: **{student_name}** ({grade})")
@@ -472,7 +497,7 @@ elif st.session_state.page == 2:
   st.markdown("---")
 
   # ==========================================
-  # PHẦN ĐÁNH GIÁ TỰ NHẬN THỨC CHI TIẾT
+  # PHẦN ĐÁNH GIÁ TỰ NHẬN THỨC CHI TIẾT (ĐÃ BỎ DẤU 2 CHẤM BÀI TRÊN)
   # ==========================================
   st.markdown("### 📝 ĐÁNH GIÁ TỰ NHẬN THỨC CHI TIẾT")
 
@@ -481,12 +506,12 @@ elif st.session_state.page == 2:
         f"""
         <div class='eval-box status-success'>
         <h4>🟢 MỨC ĐỘ THẤP (COI = {coi:.2f}): TỰ CHỦ CHỦ ĐỘNG & TƯ DUY ĐỘC LẬP TỐT</h4>
-        <span class='eval-section-title'>📌 Thực trạng hành vi:</span>
+        <span class='eval-section-title'>📌 Thực trạng hành vi</span>
         Học sinh thể hiện tinh thần tự học xuất sắc và bản lĩnh vững vàng trong quá trình giải quyết vấn đề. Trí tuệ nhân tạo (AI) chỉ đóng vai trò là một công cụ hỗ trợ tham khảo nâng cao, hoàn toàn không làm ảnh hưởng hay thay thế tư duy cá nhân.<br><br>
-        <span class='eval-section-title'>💪 Điểm mạnh cốt lõi:</span>
+        <span class='eval-section-title'>💪 Điểm mạnh cốt lõi</span>
         • Luôn dành khoảng thời gian thích đáng để tự đọc đề, phân tích và nháp lời giải trước khi tra cứu AI (chỉ số T_off cao).<br>
         • Duy trì thái độ hoài nghi khoa học, chủ động kiểm định và đối soát logic thông tin do AI cung cấp thay vì chấp nhận ngay (chỉ số C_blind rất thấp).<br><br>
-        <span class='eval-section-title'>🚀 Định hướng phát triển:</span>
+        <span class='eval-section-title'>🚀 Định hướng phát triển</span>
         Tiếp tục duy trì thói quen tích cực này. Học sinh có thể nâng cấp việc sử dụng AI lên các mức độ cao hơn như: dùng AI để phản biện chéo các lập luận cá nhân, tìm kiếm giải pháp tối ưu hơn cho bài toán hoặc mở rộng góc nhìn chuyên sâu.
         </div>
         """,
@@ -497,12 +522,12 @@ elif st.session_state.page == 2:
         f"""
         <div class='eval-box status-warning'>
         <h4>🟡 MỨC ĐỘ TRUNG BÌNH (COI = {coi:.2f}): CẢNH BÁO NGUY CƠ BẮT ĐẦU PHỤ THUỘC</h4>
-        <span class='eval-section-title'>📌 Thực trạng hành vi:</span>
+        <span class='eval-section-title'>📌 Thực trạng hành vi</span>
         Học sinh bắt đầu hình thành thói quen ngả lưng vào sự trợ giúp của AI. Dù bản thân vẫn có năng lực tự làm bài, nhưng khi đối mặt với các dạng bài phức tạp, bài tập dài hoặc áp lực thời gian, học sinh thường chọn cách tra cứu AI ngay để lấy đáp án nhanh.<br><br>
-        <span class='eval-section-title'>⚠️ Yếu tố rủi ro:</span>
+        <span class='eval-section-title'>⚠️ Yếu tố rủi ro</span>
         • Thời gian tự suy nghĩ độc lập (T_off) đang bị rút ngắn đáng kể, cho thấy sự giảm sút về độ kiên trì khi giải quyết vấn đề khó.<br>
         • Đôi khi chủ quan sao chép lời giải của AI mà bỏ qua bước đối chiếu logic, dễ dẫn đến việc tiếp thu kiến thức sai lệch do lỗi "ảo giác" (hallucination) của máy tính.<br><br>
-        <span class='eval-section-title'>💡 Khuyến nghị điều chỉnh:</span>
+        <span class='eval-section-title'>💡 Khuyến nghị điều chỉnh</span>
         Áp dụng nghiêm túc "Quy tắc 15 phút" - Bắt buộc tự nháp và tìm phương án tối thiểu 15 phút trước khi mở AI. Đổi cách tương tác: Chỉ xin AI gợi ý hướng đi hoặc dàn ý, tuyệt đối không yêu cầu tạo ra lời giải hoàn chỉnh.
         </div>
         """,
@@ -513,13 +538,13 @@ elif st.session_state.page == 2:
         f"""
         <div class='eval-box status-danger'>
         <h4>🔴 MỨC ĐỘ CAO (COI = {coi:.2f}): BÁO ĐỘNG LẠM DỤNG & SUY GIẢM NĂNG LỰC TƯ DUY</h4>
-        <span class='eval-section-title'>🚨 Cảnh báo nghiêm trọng:</span>
+        <span class='eval-section-title'>🚨 Cảnh báo nghiêm trọng</span>
         Học sinh đang phụ thuộc nghiêm trọng vào công cụ AI. Việc ủy thác toàn bộ bộ não cho máy tính xử lý đang khiến các phản xạ tư duy tự nhiên, kỹ năng phân tích và tư duy phản biện bị tiêu biến rõ rệt theo thời gian.<br><br>
-        <span class='eval-section-title'>❌ Biểu hiện lâm sàng:</span>
+        <span class='eval-section-title'>❌ Biểu hiện lâm sàng</span>
         • Vừa nhận bài tập liền lập tức sao chép câu hỏi gửi cho AI (T_off gần như bằng 0).<br>
         • Lấy nguyên văn kết quả do AI tạo ra dán vào bài nộp (C_blind chạm ngưỡng báo động) mà không cần hiểu bản chất lời giải.<br>
         • Mất hoàn toàn màng lọc phản biện, thụ động tin tưởng 100% vào AI.<br><br>
-        <span class='eval-section-title'>🛠️ Biện pháp can thiệp cấp bách:</span>
+        <span class='eval-section-title'>🛠️ Biện pháp can thiệp cấp bách</span>
         Thực hiện "Thử thách cai nghiện AI" trong 2 tuần: Hoàn toàn không sử dụng AI khi làm bài tập về nhà để kích hoạt lại năng lực tự duy. Bắt buộc nộp kèm tờ giấy nháp tay có chữ ký kiểm duyệt đối với mọi bài làm.
         </div>
         """,
