@@ -237,16 +237,6 @@ elif st.session_state.page == 2:
     st.session_state.page = 1
     st.rerun()
 
-  st.markdown(
-      """
-    <div class="app-header">
-        <div class="app-header-title">BÁO CÁO CHẨN ĐOÁN TỰ NHẬN THỨC COI</div>
-        <div class="app-header-subtitle">AI DEPENDENCE INDEX REPORT</div>
-    </div>
-    """,
-      unsafe_allow_html=True,
-  )
-
   col_left, col_right = st.columns([1.1, 0.9], gap="large")
 
   with col_left:
