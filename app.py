@@ -12,117 +12,129 @@ st.set_page_config(
     layout="wide",
 )
 
-# Style CSS tinh chỉnh
+# Style CSS tinh chỉnh Font chữ & Giao diện Đẹp
 st.markdown(
     """
     <style>
+    /* NHẬP FONT CHỮ HIỆN ĐẠI TỪ GOOGLE FONTS */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
-    .stApp {
+    /* Font mặc định cho toàn bộ ứng dụng */
+    html, body, [class*="css"], .stApp {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
         background-color: #F8FAFC;
+        color: #1E293B;
     }
     
+    /* Cấu hình Typography cho các thẻ Tiêu đề Streamlit */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        letter-spacing: -0.02em !important;
+    }
+
     /* Header Banner sáng & đẹp */
     .app-header {
-        background: linear-gradient(135deg, #2563EB 0%, #3B82F6 50%, #60A5FA 100%);
-        padding: 28px 30px;
-        border-radius: 16px;
-        box-shadow: 0 8px 20px -5px rgba(37, 99, 235, 0.25);
+        background: linear-gradient(135deg, #1E40AF 0%, #2563EB 50%, #3B82F6 100%);
+        padding: 32px 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
         text-align: center;
-        margin-bottom: 25px;
+        margin-bottom: 28px;
         color: #FFFFFF;
     }
     .app-header-title {
-        font-size: 30px;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        font-size: 32px;
         font-weight: 800;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
         margin: 0;
         text-transform: uppercase;
         line-height: 1.2;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
     .app-header-subtitle {
+        font-family: 'Inter', sans-serif !important;
         color: #E0F2FE;
         font-size: 14px;
         font-weight: 600;
-        letter-spacing: 2px;
-        margin-top: 6px;
+        letter-spacing: 2.5px;
+        margin-top: 8px;
         text-transform: uppercase;
     }
     
-    /* Style cho Nút Bấm */
+    /* Style cho Nút Bấm Chuyển Trang & Tương Tác */
     div.stButton > button {
-        border-radius: 12px !important;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
         font-weight: 700 !important;
-        height: 3.2em !important;
+        letter-spacing: 0.3px !important;
+        border-radius: 14px !important;
+        height: 3.4em !important;
         background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%) !important;
-        color: white !important;
+        color: #FFFFFF !important;
         border: none !important;
-        transition: all 0.3s ease !important;
-        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3) !important;
         font-size: 16px !important;
     }
     div.stButton > button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35) !important;
-    }
-
-    /* Khối Hồ Sơ Trung Tâm */
-    .profile-banner {
-        background: #FFFFFF;
-        border: 1px solid #E2E8F0;
-        border-radius: 16px;
-        padding: 20px 24px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 22px rgba(37, 99, 235, 0.45) !important;
+        background: linear-gradient(135deg, #1D4ED8 0%, #1E40AF 100%) !important;
     }
 
     /* Thẻ trạng thái kết quả */
     .status-card {
-        padding: 14px;
-        border-radius: 12px;
+        padding: 16px;
+        border-radius: 14px;
         text-align: center;
-        font-weight: 600;
+        font-weight: 700;
+        font-family: 'Plus Jakarta Sans', sans-serif;
     }
-    .status-danger { background-color: #FEF2F2; color: #991B1B; border: 1px solid #FCA5A5; }
-    .status-warning { background-color: #FFFBEB; color: #92400E; border: 1px solid #FCD34D; }
-    .status-success { background-color: #F0FDF4; color: #166534; border: 1px solid #86EFAC; }
+    .status-danger { background-color: #FEF2F2; color: #991B1B; border: 1.5px solid #FCA5A5; }
+    .status-warning { background-color: #FFFBEB; color: #92400E; border: 1.5px solid #FCD34D; }
+    .status-success { background-color: #F0FDF4; color: #166534; border: 1.5px solid #86EFAC; }
     
     /* Khối đánh giá chi tiết */
     .eval-box {
-        padding: 24px;
-        border-radius: 14px;
-        margin-top: 15px;
+        padding: 26px;
+        border-radius: 16px;
+        margin-top: 18px;
         line-height: 1.8;
         font-size: 15px;
     }
     .eval-box h4 {
         margin-top: 0;
-        margin-bottom: 14px;
-        font-size: 18px;
-        font-weight: 700;
+        margin-bottom: 16px;
+        font-size: 19px;
+        font-weight: 800;
     }
     .eval-section-title {
+        font-family: 'Plus Jakarta Sans', sans-serif;
         font-weight: 700;
-        margin-top: 10px;
+        margin-top: 12px;
         display: block;
+        font-size: 15.5px;
     }
 
     /* Hướng dẫn đọc Biểu đồ Radar đặt dưới cột trái */
     .radar-guide-container {
         background: #FFFFFF;
         border-radius: 16px;
-        padding: 20px;
+        padding: 22px;
         margin-top: 20px;
         border: 1px solid #E2E8F0;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
     }
     .radar-guide-header {
-        font-size: 16px;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 16.5px;
         font-weight: 800;
-        color: #1E293B;
-        margin-bottom: 12px;
+        color: #0F172A;
+        margin-bottom: 14px;
         display: flex;
         align-items: center;
         gap: 8px;
@@ -130,12 +142,13 @@ st.markdown(
     .radar-main-tip {
         background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
         border-left: 4px solid #2563EB;
-        padding: 10px 14px;
-        border-radius: 8px;
-        font-size: 13.5px;
+        padding: 12px 16px;
+        border-radius: 10px;
+        font-size: 14px;
         color: #1E40AF;
         font-weight: 600;
-        margin-bottom: 14px;
+        margin-bottom: 16px;
+        line-height: 1.5;
     }
     .radar-grid {
         display: grid;
@@ -144,20 +157,21 @@ st.markdown(
     }
     .radar-card {
         background: #F8FAFC;
-        border: 1px solid #F1F5F9;
-        border-radius: 10px;
-        padding: 12px 14px;
+        border: 1px solid #E2E8F0;
+        border-radius: 12px;
+        padding: 14px;
         transition: all 0.2s ease;
     }
     .radar-card:hover {
-        border-color: #CBD5E1;
+        border-color: #94A3B8;
         background: #F1F5F9;
     }
     .radar-card-title {
+        font-family: 'Plus Jakarta Sans', sans-serif;
         font-weight: 700;
         font-size: 13.5px;
         color: #0F172A;
-        margin-bottom: 4px;
+        margin-bottom: 6px;
         display: flex;
         align-items: center;
         gap: 6px;
@@ -165,34 +179,26 @@ st.markdown(
     .radar-card-desc {
         font-size: 12.5px;
         color: #475569;
-        line-height: 1.4;
-    }
-
-    /* Khối Biểu Đồ Radar bên phải */
-    .radar-chart-container {
-        background: #FFFFFF;
-        border-radius: 16px;
-        padding: 20px;
-        border: 1px solid #E2E8F0;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-        text-align: center;
+        line-height: 1.5;
     }
 
     /* Thẻ Lộ trình Gamification */
     .level-card {
-        padding: 18px 20px;
-        border-radius: 10px;
-        margin-top: 15px;
-        margin-bottom: 8px;
+        padding: 20px 22px;
+        border-radius: 14px;
+        margin-top: 16px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     }
-    .level-card-easy { border-left: 5px solid #10B981; background: #ECFDF5; }
-    .level-card-medium { border-left: 5px solid #F59E0B; background: #FFFBEB; }
-    .level-card-hard { border-left: 5px solid #F97316; background: #FFF7ED; }
-    .level-card-expert { border-left: 5px solid #EF4444; background: #FEF2F2; }
+    .level-card-easy { border-left: 6px solid #10B981; background: #ECFDF5; }
+    .level-card-medium { border-left: 6px solid #F59E0B; background: #FFFBEB; }
+    .level-card-hard { border-left: 6px solid #F97316; background: #FFF7ED; }
+    .level-card-expert { border-left: 6px solid #EF4444; background: #FEF2F2; }
 
     .level-title {
+        font-family: 'Plus Jakarta Sans', sans-serif;
         font-weight: 800;
-        font-size: 16px;
+        font-size: 16.5px;
         margin-bottom: 8px;
     }
     .level-desc {
@@ -420,7 +426,7 @@ elif st.session_state.page == 2:
         unsafe_allow_html=True,
     )
 
-  # CỘT PHẢI: BIỂU ĐỒ RADAR (NẰM NGANG HÀNG VỚI CẢ BẢNG BÁO CÁO & HƯỚNG DẪN)
+  # CỘT PHẢI: BIỂU ĐỒ RADAR
   with col_right:
     st.markdown("#### 📊 Biểu Đồ Radar Năng Lực Tự Chủ")
 
@@ -442,7 +448,8 @@ elif st.session_state.page == 2:
     stats = np.concatenate((stats, [stats[0]]))
     angles = np.concatenate((angles, [angles[0]]))
 
-    # Điều chỉnh chiều cao hình vẽ (figsize) cân xứng hoàn hảo với toàn bộ cột trái
+    # Áp dụng Font chữ thống nhất cho Biểu đồ Matplotlib
+    plt.rcParams["font.sans-serif"] = "DejaVu Sans"
     fig, ax = plt.subplots(figsize=(5.4, 5.4), subplot_kw=dict(polar=True))
     color_code = (
         "#EF4444" if coi > 60 else ("#F59E0B" if coi >= 30 else "#10B981")
@@ -457,7 +464,7 @@ elif st.session_state.page == 2:
     ax.set_ylim(0, 100)
     ax.set_yticks([0, 20, 40, 60, 80, 100])
     ax.set_yticklabels(
-        ["0", "20", "40", "60", "80", "100"], fontsize=8, color="gray"
+        ["0", "20", "40", "60", "80", "100"], fontsize=8, color="#64748B"
     )
 
     st.pyplot(fig)
