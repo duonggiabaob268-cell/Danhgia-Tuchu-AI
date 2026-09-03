@@ -294,7 +294,7 @@ if st.session_state.page == 1:
 
   with col_center2:
     st.subheader("📋 1. Thông tin học sinh")
-    st.caption("*Vui lòng nhập họ tên và chọn khối lớp của học sinh*")
+    st.caption("*Vui lòng nhập họ tên và chọn khối lớp*")
 
     student_name = st.text_input(
         "1. Họ và tên học sinh",
