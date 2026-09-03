@@ -72,7 +72,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Khởi tạo trạng thái chuyển trang bắt buộc phải nằm trước lệnh kiểm tra if
+# Khởi tạo trạng thái chuyển trang
 if "page" not in st.session_state:
   st.session_state.page = 1
 
@@ -128,13 +128,14 @@ if st.session_state.page == 1:
         help="Tỷ lệ câu hỏi gửi lệnh cho AI xử lý (F_off ∈ [0, 1])",
     )
 
+    # Giữ nguyên 2 số thập phân cho T_off
     t_off = st.slider(
         "3. Thời gian suy nghĩ độc lập (T_off):",
         min_value=0.0,
         max_value=1.0,
-        value=round(st.session_state.get("t_off", 0.2), 1),
-        step=0.1,
-        format="%.1f",
+        value=round(st.session_state.get("t_off", 0.17), 2),
+        step=0.01,
+        format="%.2f",
         help=(
             "Chỉ số thời gian/nỗ lực suy nghĩ trước khi hỏi AI (T_off ∈ [0, 1])"
         ),
