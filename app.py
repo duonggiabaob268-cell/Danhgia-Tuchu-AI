@@ -294,10 +294,12 @@ if st.session_state.page == 1:
 
   with col_center2:
     st.subheader("📋 1. Thông tin học sinh")
+    st.caption("*Vui lòng nhập họ tên và chọn khối lớp của học sinh*")
+
     student_name = st.text_input(
         "1. Họ và tên học sinh",
-        st.session_state.get("student_name", "Nguyễn Văn A"),
-        placeholder="Nhập đầy đủ họ tên...",
+        value=st.session_state.get("student_name", ""),
+        placeholder="Nhập đầy đủ họ tên học sinh...",
     )
     grade = st.selectbox(
         "2. Khối lớp",
@@ -309,12 +311,16 @@ if st.session_state.page == 1:
 
     st.markdown("---")
     st.subheader("⚙️ 2. Nhập chỉ số hành vi thực nghiệm")
+    st.caption(
+        "*Vui lòng kéo thanh chỉ số tương ứng với kết quả của bài test thực"
+        " nghiệm*"
+    )
 
     c_blind = st.slider(
         "1. Tỷ lệ sao chép mù quáng (C_blind)",
         min_value=0.0,
         max_value=1.0,
-        value=round(st.session_state.get("c_blind", 0.4), 1),
+        value=round(st.session_state.get("c_blind", 0.0), 1),
         step=0.1,
         format="%.1f",
     )
@@ -323,7 +329,7 @@ if st.session_state.page == 1:
         "2. Tần suất cầu viện AI (F_off)",
         min_value=0.0,
         max_value=1.0,
-        value=round(st.session_state.get("f_off", 0.6), 1),
+        value=round(st.session_state.get("f_off", 0.0), 1),
         step=0.1,
         format="%.1f",
     )
@@ -332,7 +338,7 @@ if st.session_state.page == 1:
         "3. Thời gian suy nghĩ độc lập (T_off)",
         min_value=0.0,
         max_value=1.0,
-        value=round(st.session_state.get("t_off", 0.17), 2),
+        value=round(st.session_state.get("t_off", 0.0), 2),
         step=0.01,
         format="%.2f",
     )
@@ -357,7 +363,7 @@ if st.session_state.page == 1:
 # TRANG 2: BÁO CÁO KẾT QUẢ
 # ==========================================
 elif st.session_state.page == 2:
-  student_name = st.session_state.get("student_name", "N/A")
+  student_name = st.session_state.get("student_name", "Chưa nhập tên")
   grade = st.session_state.get("grade", "N/A")
   c_blind = st.session_state.get("c_blind", 0.0)
   f_off = st.session_state.get("f_off", 0.0)
