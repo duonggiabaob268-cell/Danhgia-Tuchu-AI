@@ -22,12 +22,21 @@ st.markdown(
         text-align: center;
         margin-bottom: 20px;
     }
+    .note-box {
+        background-color: #F8FAFC;
+        padding: 12px 16px;
+        border-radius: 8px;
+        border: 1px solid #E2E8F0;
+        font-size: 13px;
+        color: #334155;
+        margin-top: 10px;
+    }
     </style>
 """,
     unsafe_allow_html=True,
 )
 
-# Tiêu đề chính (Đã bỏ dòng Giải pháp 3)
+# Tiêu đề chính
 st.markdown(
     "<div class='main-title'>🔬 PHIẾU CHẨN ĐOÁN TƯ DUY CÁ NHÂN (PERSONAL"
     " AI-HEALTH CHECK)</div>",
@@ -77,7 +86,6 @@ t_off = st.sidebar.slider(
 
 # ==========================================
 # 3. MÔ HÌNH TOÁN HỌC & TÍNH CHỈ SỐ COI
-# Công thức chuẩn: COI = max(0, 30*F_off - 20*T_off + 70*C_blind)
 # ==========================================
 a, b, c = 30, 20, 70
 coi_calc = (a * f_off) - (b * t_off) + (c * c_blind)
@@ -144,7 +152,7 @@ with col_left:
   df = pd.DataFrame(data)
   st.dataframe(df, use_container_width=True, hide_index=True)
 
-  # KHỐI CÔNG THỨC SẠCH SẼ - BỎ HTML DIV BỊ LỖI
+  # CÔNG THỨC TOÁN HỌC LATEX
   st.markdown("**Công thức toán học tính chỉ số COI:**")
   st.latex(
       r"\text{COI} = \max\left(0,\; 30 \cdot F_{\text{off}} - 20 \cdot"
@@ -152,7 +160,7 @@ with col_left:
   )
 
 # ==========================================
-# 5. VẼ BIỂU ĐỒ RADAR 4 CHIỀU NĂNG LỰC
+# 5. VẼ BIỂU ĐỒ RADAR 4 CHIỀU NĂNG LỰC & CHÚ THÍCH
 # ==========================================
 with col_right:
   st.subheader("📊 Biểu Đồ Radar Năng Lực Tự Chủ")
@@ -183,9 +191,31 @@ with col_right:
   ax.set_thetagrids(
       np.degrees(angles[:-1]), labels, fontsize=9, fontweight="bold"
   )
+
+  # Thang đo từ 0 đến 100 chuẩn mực
   ax.set_ylim(0, 100)
+  ax.set_yticks([0, 20, 40, 60, 80, 100])
+  ax.set_yticklabels(
+      ["0", "20", "40", "60", "80", "100"], fontsize=7, color="gray"
+  )
 
   st.pyplot(fig)
+
+  # KHỐI GIẢI THÍCH CHÚ THÍCH RÕ RÀNG
+  st.markdown(
+      """
+  <div class='note-box'>
+  <b>💡 Hướng dẫn đọc biểu đồ Radar (Thang điểm 0 - 100%):</b><br>
+  • <b>Mốc 0 - 100%:</b> Biểu đồ quy đổi toàn bộ chỉ số về phần trăm (%). Mốc <b>0%</b> ở tâm (yếu nhất) và <b>100%</b> ở vòng ngoài cùng (làm chủ hoàn hảo).<br>
+  • <b>T_off (Nỗ lực tư duy):</b> Tỷ lệ thời gian nháp/suy nghĩ trước khi bật AI ($T_{off} \times 100\%$).<br>
+  • <b>C_blind (Màng lọc phản biện):</b> Khả năng kiểm tra lỗi bài làm, quy đổi bằng $(1 - C_{blind}) \times 100\%$.<br>
+  • <b>F_off (Tính tự lực):</b> Mức độ tự hoàn thành bài tập không cần AI trợ giúp, quy đổi bằng $(1 - F_{off}) \times 100\%$.<br>
+  • <b>Metacognition (Siêu nhận thức):</b> Năng lực tự kiểm soát nhận thức cá nhân ($100 - \text{COI}$).<br>
+  📌 <i><b>Quy tắc thị giác:</b> Diện tích vùng màu covered càng rộng, năng lực tự chủ tư duy của học sinh càng toàn diện.</i>
+  </div>
+  """,
+      unsafe_allow_html=True,
+  )
 
 # ==========================================
 # 6. LỘ TRÌNH TỰ ĐIỀU CHỈNH XẾP DỌC (GAMIFICATION)
