@@ -15,37 +15,37 @@ st.set_page_config(
 st.markdown(
     """
     <style>
+    /* Header chính: Tông màu sáng tươi, chữ to rõ ràng */
     .main-header-container {
-        background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #3b82f6 100%);
-        padding: 24px 30px;
+        background: linear-gradient(135deg, #2563EB 0%, #3B82F6 50%, #60A5FA 100%);
+        padding: 28px 30px;
         border-radius: 16px;
-        box-shadow: 0 10px 25px -5px rgba(30, 58, 138, 0.3);
+        box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.35);
         text-align: center;
         margin-bottom: 30px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
     }
+    
     .main-title-text {
-        background: linear-gradient(90deg, #FFFFFF 0%, #E0F2FE 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-size: 26px;
+        color: #FFFFFF;
+        font-size: 32px;
         font-weight: 800;
-        letter-spacing: 0.5px;
+        letter-spacing: 1px;
         margin: 0;
         text-transform: uppercase;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
+        line-height: 1.2;
     }
+    
     .sub-title-text {
-        color: #93C5FD;
-        font-size: 13px;
-        font-weight: 500;
-        letter-spacing: 2px;
-        margin-top: 6px;
+        color: #E0F2FE;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 2.5px;
+        margin-top: 8px;
         text-transform: uppercase;
     }
+
+    /* Thẻ ghi chú và trạng thái */
     .note-box {
         background-color: #F8FAFC;
         padding: 14px 18px;
@@ -56,35 +56,42 @@ st.markdown(
         margin-top: 10px;
         line-height: 1.6;
     }
+    
     .status-card {
         padding: 14px 18px;
         border-radius: 10px;
         text-align: center;
     }
+    
     .status-title {
         font-size: 18px;
         font-weight: bold;
         margin-bottom: 4px;
     }
+    
     .status-desc {
         font-size: 13px;
         opacity: 0.9;
     }
+    
     .status-danger {
         background-color: #FEF2F2;
         color: #991B1B;
         border: 1px solid #FCA5A5;
     }
+    
     .status-warning {
         background-color: #FFFBEB;
         color: #92400E;
         border: 1px solid #FCD34D;
     }
+    
     .status-success {
         background-color: #F0FDF4;
         color: #166534;
         border: 1px solid #86EFAC;
     }
+    
     .eval-box {
         padding: 16px;
         border-radius: 10px;
@@ -107,9 +114,7 @@ if st.session_state.page == 1:
   st.markdown(
       """
     <div class="main-header-container">
-        <div class="main-title-text">
-            <span>🔬</span> PHIẾU CHẨN ĐOÁN TƯ DUY CÁ NHÂN
-        </div>
+        <div class="main-title-text">PHIẾU CHẨN ĐOÁN TƯ DUY CÁ NHÂN</div>
         <div class="sub-title-text">PERSONAL AI-HEALTH CHECK</div>
     </div>
     """,
@@ -204,9 +209,7 @@ elif st.session_state.page == 2:
   st.markdown(
       """
     <div class="main-header-container">
-        <div class="main-title-text">
-            <span>📊</span> BÁO CÁO CHẨN ĐOÁN TỰ NHẬN THỨC COI
-        </div>
+        <div class="main-title-text">BÁO CÁO CHẨN ĐOÁN TỰ NHẬN THỨC COI</div>
         <div class="sub-title-text">AI DEPENDENCE INDEX REPORT</div>
     </div>
     """,
