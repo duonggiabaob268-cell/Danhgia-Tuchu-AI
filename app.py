@@ -24,12 +24,13 @@ st.markdown(
     }
     .note-box {
         background-color: #F8FAFC;
-        padding: 12px 16px;
+        padding: 14px 18px;
         border-radius: 8px;
         border: 1px solid #E2E8F0;
         font-size: 13px;
         color: #334155;
         margin-top: 10px;
+        line-height: 1.6;
     }
     </style>
 """,
@@ -127,12 +128,12 @@ with col_left:
 
   if t_off <= 0.3:
     st.warning(
-        f"⚠️ **CẢNH BÁO THỜI GIAN SUY NGHĨ $T_{{off}}$:** Chỉ số thời gian suy"
-        f" nghĩ $T_{{off}}$ của bạn hiện ở mức rất thấp (**{t_off:.2f}**). Bạn"
-        " đang quá vội vã tìm kiếm 'lối tắt' thay vì tự nháp bài."
+        f"⚠️ **CẢNH BÁO THỜI GIAN SUY NGHĨ T_off:** Chỉ số thời gian suy nghĩ"
+        f" T_off của bạn hiện ở mức rất thấp (**{t_off:.2f}**). Bạn đang quá"
+        " vội vã tìm kiếm 'lối tắt' thay vì tự nháp bài."
     )
   else:
-    st.success(f"✅ Chỉ số nỗ lực tư duy $T_{{off}}$ đạt mức tích cực: **{t_off:.2f}**.")
+    st.success(f"✅ Chỉ số nỗ lực tư duy T_off đạt mức tích cực: **{t_off:.2f}**.")
 
   # Bảng giá trị thông số thực nghiệm
   st.markdown("#### 📐 Bảng Thông Số Chẩn Đoán Dữ Liệu")
@@ -152,7 +153,7 @@ with col_left:
   df = pd.DataFrame(data)
   st.dataframe(df, use_container_width=True, hide_index=True)
 
-  # CÔNG THỨC TOÁN HỌC LATEX
+  # CÔNG THỨC TOÁN HỌC LATEX CHUẨN (DÙNG RAW STRING r"...")
   st.markdown("**Công thức toán học tính chỉ số COI:**")
   st.latex(
       r"\text{COI} = \max\left(0,\; 30 \cdot F_{\text{off}} - 20 \cdot"
@@ -192,7 +193,7 @@ with col_right:
       np.degrees(angles[:-1]), labels, fontsize=9, fontweight="bold"
   )
 
-  # Thang đo từ 0 đến 100 chuẩn mực
+  # Thang đo từ 0 đến 100
   ax.set_ylim(0, 100)
   ax.set_yticks([0, 20, 40, 60, 80, 100])
   ax.set_yticklabels(
@@ -201,17 +202,17 @@ with col_right:
 
   st.pyplot(fig)
 
-  # KHỐI GIẢI THÍCH CHÚ THÍCH RÕ RÀNG
+  # KHỐI CHÚ THÍCH SẠCH SẼ - KHÔNG LỖI ĐỊNH DẠNG
   st.markdown(
       """
   <div class='note-box'>
   <b>💡 Hướng dẫn đọc biểu đồ Radar (Thang điểm 0 - 100%):</b><br>
   • <b>Mốc 0 - 100%:</b> Biểu đồ quy đổi toàn bộ chỉ số về phần trăm (%). Mốc <b>0%</b> ở tâm (yếu nhất) và <b>100%</b> ở vòng ngoài cùng (làm chủ hoàn hảo).<br>
-  • <b>T_off (Nỗ lực tư duy):</b> Tỷ lệ thời gian nháp/suy nghĩ trước khi bật AI ($T_{off} \times 100\%$).<br>
-  • <b>C_blind (Màng lọc phản biện):</b> Khả năng kiểm tra lỗi bài làm, quy đổi bằng $(1 - C_{blind}) \times 100\%$.<br>
-  • <b>F_off (Tính tự lực):</b> Mức độ tự hoàn thành bài tập không cần AI trợ giúp, quy đổi bằng $(1 - F_{off}) \times 100\%$.<br>
-  • <b>Metacognition (Siêu nhận thức):</b> Năng lực tự kiểm soát nhận thức cá nhân ($100 - \text{COI}$).<br>
-  📌 <i><b>Quy tắc thị giác:</b> Diện tích vùng màu covered càng rộng, năng lực tự chủ tư duy của học sinh càng toàn diện.</i>
+  • <b>T_off (Nỗ lực tư duy):</b> Tỷ lệ thời gian nháp/suy nghĩ trước khi bật AI = T_off × 100%.<br>
+  • <b>C_blind (Màng lọc phản biện):</b> Khả năng kiểm tra lỗi bài làm = (1 - C_blind) × 100%.<br>
+  • <b>F_off (Tính tự lực):</b> Mức độ tự hoàn thành bài tập không cần AI trợ giúp = (1 - F_off) × 100%.<br>
+  • <b>Metacognition (Siêu nhận thức):</b> Năng lực tự kiểm soát nhận thức cá nhân = 100 - COI.<br>
+  📌 <i><b>Quy tắc thị giác:</b> Diện tích vùng màu phủ càng rộng, năng lực tự chủ tư duy của học sinh càng toàn diện.</i>
   </div>
   """,
       unsafe_allow_html=True,
@@ -228,7 +229,7 @@ st.write(
 )
 
 # Bước 1
-st.markdown("##### 🟢 Level 1: Nỗ Lực Tư Duy Độc Lập ($T_{off}$)")
+st.markdown("##### 🟢 Level 1: Nỗ Lực Tư Duy Độc Lập (T_off)")
 st.checkbox(
     "Cam kết tự nháp và suy nghĩ tối thiểu 10–15 phút trước khi mở AI trợ giúp.",
     key="lvl1",
@@ -249,7 +250,7 @@ st.checkbox(
 st.markdown("---")
 
 # Bước 3
-st.markdown("##### 🟠 Level 3: Kiểm Chứng Phản Biện ($C_{blind}$)")
+st.markdown("##### 🟠 Level 3: Kiểm Chứng Phản Biện (C_blind)")
 st.checkbox(
     "Đóng vai người kiểm duyệt: Chủ động truy tìm ít nhất 1 lỗi logic hoặc bẫy"
     " ảo giác trong câu trả lời của AI.",
