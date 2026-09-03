@@ -12,7 +12,7 @@ st.set_page_config(
     layout="wide",
 )
 
-# STYLE CSS CHI TIẾT (BẢNG ĐẸP + NÚT BẤM + CHỈNH LABEL BƯỚC 1 & BƯỚC 2)
+# STYLE CSS CHI TIẾT
 st.markdown(
     """
     <style>
@@ -33,7 +33,7 @@ st.markdown(
         letter-spacing: -0.02em !important;
     }
 
-    /* ĐỊNH DẠNG FONT CHỮ ĐẸP CHO LABEL CỦA INPUT VÀ SLIDER (BƯỚC 1 & BƯỚC 2) */
+    /* ĐỊNH DẠNG FONT CHỮ ĐẸP CHO LABEL CỦA INPUT VÀ SLIDER */
     .stTextInput > label,
     .stSelectbox > label,
     .stSlider > label,
@@ -293,14 +293,14 @@ if st.session_state.page == 1:
   col_center1, col_center2, col_center3 = st.columns([1, 2.5, 1])
 
   with col_center2:
-    st.subheader("📋 Bước 1: Thông tin học sinh")
+    st.subheader("📋 1. Thông tin học sinh")
     student_name = st.text_input(
-        "Họ và tên học sinh",
+        "1. Họ và tên học sinh",
         st.session_state.get("student_name", "Nguyễn Văn A"),
         placeholder="Nhập đầy đủ họ tên...",
     )
     grade = st.selectbox(
-        "Khối lớp",
+        "2. Khối lớp",
         ["Khối 10", "Khối 11", "Khối 12"],
         index=["Khối 10", "Khối 11", "Khối 12"].index(
             st.session_state.get("grade", "Khối 10")
@@ -308,7 +308,7 @@ if st.session_state.page == 1:
     )
 
     st.markdown("---")
-    st.subheader("⚙️ Bước 2: Nhập chỉ số hành vi thực nghiệm")
+    st.subheader("⚙️ 2. Nhập chỉ số hành vi thực nghiệm")
 
     c_blind = st.slider(
         "1. Tỷ lệ sao chép mù quáng (C_blind)",
