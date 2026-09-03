@@ -15,12 +15,36 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    .main-title {
-        font-size: 28px;
-        font-weight: bold;
-        color: #1E3A8A;
+    .main-header-container {
+        background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #3b82f6 100%);
+        padding: 24px 30px;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px -5px rgba(30, 58, 138, 0.3);
         text-align: center;
-        margin-bottom: 25px;
+        margin-bottom: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .main-title-text {
+        background: linear-gradient(90deg, #FFFFFF 0%, #E0F2FE 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 26px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        margin: 0;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+    }
+    .sub-title-text {
+        color: #93C5FD;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 2px;
+        margin-top: 6px;
+        text-transform: uppercase;
     }
     .note-box {
         background-color: #F8FAFC;
@@ -81,8 +105,14 @@ if "page" not in st.session_state:
 # ==========================================
 if st.session_state.page == 1:
   st.markdown(
-      "<div class='main-title'>🔬 PHIẾU CHẨN ĐOÁN TƯ DUY CÁ NHÂN (PERSONAL"
-      " AI-HEALTH CHECK)</div>",
+      """
+    <div class="main-header-container">
+        <div class="main-title-text">
+            <span>🔬</span> PHIẾU CHẨN ĐOÁN TƯ DUY CÁ NHÂN
+        </div>
+        <div class="sub-title-text">PERSONAL AI-HEALTH CHECK</div>
+    </div>
+    """,
       unsafe_allow_html=True,
   )
 
@@ -128,7 +158,6 @@ if st.session_state.page == 1:
         help="Tỷ lệ câu hỏi gửi lệnh cho AI xử lý (F_off ∈ [0, 1])",
     )
 
-    # Giữ nguyên 2 số thập phân cho T_off
     t_off = st.slider(
         "3. Thời gian suy nghĩ độc lập (T_off):",
         min_value=0.0,
@@ -173,7 +202,14 @@ elif st.session_state.page == 2:
     st.rerun()
 
   st.markdown(
-      "<div class='main-title'>📊 BÁO CÁO CHẨN ĐOÁN TỰ NHẬN THỨC COI</div>",
+      """
+    <div class="main-header-container">
+        <div class="main-title-text">
+            <span>📊</span> BÁO CÁO CHẨN ĐOÁN TỰ NHẬN THỨC COI
+        </div>
+        <div class="sub-title-text">AI DEPENDENCE INDEX REPORT</div>
+    </div>
+    """,
       unsafe_allow_html=True,
   )
 
