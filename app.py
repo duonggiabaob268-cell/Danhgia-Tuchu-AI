@@ -12,7 +12,7 @@ st.set_page_config(
     layout="wide",
 )
 
-# Style CSS chuyên nghiệp
+# Style CSS tinh chỉnh loại bỏ khung rỗng và tối ưu giao diện
 st.markdown(
     """
     <style>
@@ -27,15 +27,15 @@ st.markdown(
     /* Header Banner sáng & đẹp */
     .app-header {
         background: linear-gradient(135deg, #2563EB 0%, #3B82F6 50%, #60A5FA 100%);
-        padding: 30px 40px;
-        border-radius: 18px;
-        box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
+        padding: 28px 30px;
+        border-radius: 16px;
+        box-shadow: 0 8px 20px -5px rgba(37, 99, 235, 0.25);
         text-align: center;
         margin-bottom: 25px;
         color: #FFFFFF;
     }
     .app-header-title {
-        font-size: 32px;
+        font-size: 30px;
         font-weight: 800;
         letter-spacing: 1px;
         margin: 0;
@@ -44,23 +44,13 @@ st.markdown(
     }
     .app-header-subtitle {
         color: #E0F2FE;
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 600;
-        letter-spacing: 2.5px;
-        margin-top: 8px;
+        letter-spacing: 2px;
+        margin-top: 6px;
         text-transform: uppercase;
     }
     
-    /* Card bố cục */
-    .app-card {
-        background-color: #FFFFFF;
-        padding: 24px;
-        border-radius: 16px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
-        border: 1px solid #E2E8F0;
-        margin-bottom: 20px;
-    }
-
     /* Style cho Nút Bấm */
     div.stButton > button {
         border-radius: 12px !important;
@@ -70,12 +60,12 @@ st.markdown(
         color: white !important;
         border: none !important;
         transition: all 0.3s ease !important;
-        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2) !important;
         font-size: 16px !important;
     }
     div.stButton > button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4) !important;
+        box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35) !important;
     }
 
     /* Thẻ trạng thái kết quả */
@@ -109,28 +99,27 @@ st.markdown(
         display: block;
     }
 
-    /* Thẻ Lộ trình Gamification */
+    /* Thẻ Lộ trình Gamification xuống dòng rõ ràng */
     .level-card {
-        background: #F1F5F9;
-        border-left: 5px solid #3B82F6;
-        padding: 16px 20px;
-        border-radius: 8px;
-        margin-bottom: 14px;
+        padding: 18px 20px;
+        border-radius: 10px;
+        margin-top: 15px;
+        margin-bottom: 8px;
     }
-    .level-card-easy { border-left-color: #10B981; background: #ECFDF5; }
-    .level-card-medium { border-left-color: #F59E0B; background: #FFFBEB; }
-    .level-card-hard { border-left-color: #F97316; background: #FFF7ED; }
-    .level-card-expert { border-left-color: #EF4444; background: #FEF2F2; }
+    .level-card-easy { border-left: 5px solid #10B981; background: #ECFDF5; }
+    .level-card-medium { border-left: 5px solid #F59E0B; background: #FFFBEB; }
+    .level-card-hard { border-left: 5px solid #F97316; background: #FFF7ED; }
+    .level-card-expert { border-left: 5px solid #EF4444; background: #FEF2F2; }
 
     .level-title {
         font-weight: 800;
         font-size: 16px;
-        margin-bottom: 6px;
+        margin-bottom: 8px;
     }
     .level-desc {
         font-size: 14.5px;
         color: #334155;
-        line-height: 1.6;
+        line-height: 1.7;
     }
     </style>
 """,
@@ -149,7 +138,7 @@ if st.session_state.page == 1:
       """
     <div class="app-header">
         <div class="app-header-title">PHIẾU CHẨN ĐOÁN TƯ DUY CÁ NHÂN</div>
-        <div class="app-header-subtitle">PERSONAL AI-HEALTH CHECK</div>
+        <div class="app-header-subtitle">PERSONAL AI-DEPENDENCE CHECK</div>
     </div>
     """,
       unsafe_allow_html=True,
@@ -158,7 +147,6 @@ if st.session_state.page == 1:
   col_center1, col_center2, col_center3 = st.columns([1, 2.5, 1])
 
   with col_center2:
-    st.markdown("<div class='app-card'>", unsafe_allow_html=True)
     st.subheader("📋 Bước 1: Thông tin học sinh")
     student_name = st.text_input(
         "Họ và tên học sinh:",
@@ -172,9 +160,8 @@ if st.session_state.page == 1:
             st.session_state.get("grade", "Khối 10")
         ),
     )
-    st.markdown("</div>", unsafe_allow_html=True)
 
-    st.markdown("<div class='app-card'>", unsafe_allow_html=True)
+    st.markdown("---")
     st.subheader("⚙️ Bước 2: Nhập chỉ số hành vi thực nghiệm")
 
     c_blind = st.slider(
@@ -184,10 +171,7 @@ if st.session_state.page == 1:
         value=round(st.session_state.get("c_blind", 0.4), 1),
         step=0.1,
         format="%.1f",
-        help=(
-            "Tỷ lệ bài làm chép nguyên văn từ AI không qua kiểm chứng (C_blind ∈"
-            " [0, 1])"
-        ),
+        help="Tỷ lệ bài làm chép nguyên văn từ AI không qua kiểm chứng",
     )
 
     f_off = st.slider(
@@ -197,7 +181,7 @@ if st.session_state.page == 1:
         value=round(st.session_state.get("f_off", 0.6), 1),
         step=0.1,
         format="%.1f",
-        help="Tỷ lệ câu hỏi gửi lệnh cho AI xử lý (F_off ∈ [0, 1])",
+        help="Tỷ lệ câu hỏi gửi lệnh cho AI xử lý",
     )
 
     t_off = st.slider(
@@ -207,11 +191,8 @@ if st.session_state.page == 1:
         value=round(st.session_state.get("t_off", 0.17), 2),
         step=0.01,
         format="%.2f",
-        help=(
-            "Chỉ số thời gian/nỗ lực suy nghĩ trước khi hỏi AI (T_off ∈ [0, 1])"
-        ),
+        help="Chỉ số thời gian/nỗ lực suy nghĩ trước khi hỏi AI",
     )
-    st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
     if st.button(
@@ -241,7 +222,6 @@ elif st.session_state.page == 2:
   coi_calc = (a * f_off) - (b * t_off) + (c * c_blind)
   coi = round(max(0.0, coi_calc), 2)
 
-  # Nút quay lại trang 1
   if st.button("⬅️ Quay lại trang nhập thông số"):
     st.session_state.page = 1
     st.rerun()
@@ -259,7 +239,6 @@ elif st.session_state.page == 2:
   col_left, col_right = st.columns([1.1, 0.9], gap="large")
 
   with col_left:
-    st.markdown("<div class='app-card'>", unsafe_allow_html=True)
     st.markdown(f"### 👤 Hồ sơ: **{student_name}** ({grade})")
 
     m1, m2 = st.columns(2)
@@ -303,8 +282,7 @@ elif st.session_state.page == 2:
       st.error(
           f"🚨 **CẢNH BÁO SAO CHÉP MÙ QUÁNG:** Bạn đã dành đến"
           f" **{c_blind*100:.0f}%** khối lượng bài làm để chép từ AI mà không qua"
-          " kiểm chứng phản biện! Hãy cẩn trọng để tránh suy giảm năng lực tự"
-          " duy."
+          " kiểm chứng phản biện!"
       )
     else:
       st.info(
@@ -314,9 +292,9 @@ elif st.session_state.page == 2:
 
     if t_off <= 0.3:
       st.warning(
-          f"⚠️ **CẢNH BÁO THỜI GIAN SUY NGHĨ T_off:** Chỉ số thời gian suy nghĩ"
-          f" độc lập của bạn ở mức rất thấp (**{t_off:.2f}**). Bạn có xu hướng"
-          " tìm kiếm lối tắt ngay khi gặp bài tập."
+          f"⚠️ **CẢNH BÁO THỜI GIAN SUY NGHĨ T_off:** Chỉ số nỗ lực tư duy của"
+          f" bạn ở mức rất thấp (**{t_off:.2f}**). Hãy dành nhiều thời gian nháp"
+          " độc lập hơn."
       )
     else:
       st.success(f"✅ Chỉ số nỗ lực tư duy T_off đạt mức tích cực: **{t_off:.2f}**.")
@@ -336,10 +314,8 @@ elif st.session_state.page == 2:
         "Trọng số mô hình": [f"c = {c}", f"a = {a}", f"b = {b}"],
     }
     st.dataframe(pd.DataFrame(data), use_container_width=True, hide_index=True)
-    st.markdown("</div>", unsafe_allow_html=True)
 
   with col_right:
-    st.markdown("<div class='app-card'>", unsafe_allow_html=True)
     st.markdown("### 📊 Biểu Đồ Radar Năng Lực Tự Chủ")
 
     labels = np.array([
@@ -378,12 +354,12 @@ elif st.session_state.page == 2:
     )
 
     st.pyplot(fig)
-    st.markdown("</div>", unsafe_allow_html=True)
+
+  st.markdown("---")
 
   # ==========================================
   # PHẦN ĐÁNH GIÁ TỰ NHẬN THỨC CHI TIẾT
   # ==========================================
-  st.markdown("<div class='app-card'>", unsafe_allow_html=True)
   st.markdown("### 📝 ĐÁNH GIÁ TỰ NHẬN THỨC CHI TIẾT")
 
   if coi < 30:
@@ -424,7 +400,7 @@ elif st.session_state.page == 2:
         <div class='eval-box status-danger'>
         <h4>🔴 MỨC ĐỘ CAO (COI = {coi:.2f}): BÁO ĐỘNG LẠM DỤNG & SUY GIẢM NĂNG LỰC TƯ DUY</h4>
         <span class='eval-section-title'>🚨 Cảnh báo nghiêm trọng:</span>
-        Học sinh đang phụ thuộc nghiêm trọng vào công cụ AI. Việc ủy thác toàn bộ bộ não cho máy tính xử lý đang khiến các phản xạ tư duy tự nhiên, kỹ năng phân tích và tư duy phản biện bị tiêu biến rõ rệt theo thời gian.<br><br>
+        Học sinh đang phụ thuộc nghiêm trọng vào công cụ AI. Việc ủy thác toàn bộ bộ no cho máy tính xử lý đang khiến các phản xạ tư duy tự nhiên, kỹ năng phân tích và tư duy phản biện bị tiêu biến rõ rệt theo thời gian.<br><br>
         <span class='eval-section-title'>❌ Biểu hiện lâm sàng:</span>
         • Vừa nhận bài tập liền lập tức sao chép câu hỏi gửi cho AI (T_off gần như bằng 0).<br>
         • Lấy nguyên văn kết quả do AI tạo ra dán vào bài nộp (C_blind chạm ngưỡng báo động) mà không cần hiểu bản chất lời giải.<br>
@@ -436,12 +412,11 @@ elif st.session_state.page == 2:
         unsafe_allow_html=True,
     )
 
-  st.markdown("</div>", unsafe_allow_html=True)
+  st.markdown("---")
 
   # ==========================================
   # LỘ TRÌNH GAMIFICATION TỪ DỄ ĐẾN KHÓ
   # ==========================================
-  st.markdown("<div class='app-card'>", unsafe_allow_html=True)
   st.markdown("### 🎯 LỘ TRÌNH TỰ RÈN LUYỆN TƯ DUY (GAMIFICATION)")
   st.write(
       "Thực hiện lần lượt các cấp độ bên dưới theo thứ tự từ **Dễ đến Khó** để"
@@ -503,5 +478,3 @@ elif st.session_state.page == 2:
       unsafe_allow_html=True,
   )
   st.checkbox("Đã hoàn thành Level 4", key="chk_lvl4")
-
-  st.markdown("</div>", unsafe_allow_html=True)
